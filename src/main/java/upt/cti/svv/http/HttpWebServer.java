@@ -6,6 +6,7 @@ import upt.cti.svv.util.ExceptionWrapper;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public final class HttpWebServer {
 	private static final Logger log = LoggerFactory.getLogger(HttpWebServer.class);
@@ -38,12 +39,17 @@ public final class HttpWebServer {
 		try {
 			while (true) {
 				log.info("Waiting for new connections...");
-				final HttpConnection newConnection = new HttpConnection(serverSocket.accept());
-				new Thread(newConnection).start();
+				handleNewConnection();
 			}
 		} catch (IOException e) {
 			throw new ServerErrorException("Failed to accept new connection");
 		}
+	}
+
+	private void handleNewConnection() throws IOException {
+		Socket newClientConnection = serverSocket.accept();
+		final HttpConnection newHttpConnection = new HttpConnection(newClientConnection);
+		new Thread(newHttpConnection).start();
 	}
 
 	private void bindToPort() {
