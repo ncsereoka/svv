@@ -36,8 +36,9 @@ public class HttpWebServer {
 	private void waitForConnections() {
 		try {
 			while (true) {
-				log.info("Waiting for new connection...");
-				new HttpConnection(serverSocket.accept());
+				log.info("Waiting for new connections...");
+				final HttpConnection newConnection = new HttpConnection(serverSocket.accept());
+				new Thread(newConnection).start();
 			}
 		} catch (IOException e) {
 			log.error("Failed to accept new connection");
