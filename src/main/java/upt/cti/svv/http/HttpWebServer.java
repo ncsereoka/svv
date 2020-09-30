@@ -2,11 +2,12 @@ package upt.cti.svv.http;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import upt.cti.svv.util.ExceptionWrapper;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class HttpWebServer {
+public final class HttpWebServer {
 	private static final Logger log = LoggerFactory.getLogger(HttpWebServer.class);
 
 	private ServerSocket serverSocket;
@@ -29,7 +30,7 @@ public class HttpWebServer {
 		try {
 			waitForConnections();
 		} finally {
-			closeServerSocket();
+			ExceptionWrapper.close(serverSocket, "Could not close server socket");
 		}
 	}
 
@@ -41,17 +42,7 @@ public class HttpWebServer {
 				new Thread(newConnection).start();
 			}
 		} catch (IOException e) {
-			log.error("Failed to accept new connection");
-			System.exit(1);
-		}
-	}
-
-	private void closeServerSocket() {
-		try {
-			serverSocket.close();
-		} catch (IOException e) {
-			log.error("Could not close port {}", this.port);
-			System.exit(1);
+			throw new ServerErrorException("Failed to accept new connection");
 		}
 	}
 
@@ -59,8 +50,7 @@ public class HttpWebServer {
 		try {
 			this.serverSocket = new ServerSocket(this.port);
 		} catch (IOException e) {
-			log.error("Could not listen on port: {}", this.port);
-			System.exit(1);
+			throw new ServerErrorException("Could not listen on port " + this.port);
 		}
 		log.info("Server listening on port {}...", this.port);
 	}

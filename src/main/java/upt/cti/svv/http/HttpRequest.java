@@ -1,36 +1,103 @@
 package upt.cti.svv.http;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import upt.cti.svv.util.ExceptionWrapper;
+import upt.cti.svv.util.ImmutablePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Map;
 
-public class HttpRequest {
-	private static final Logger log = LoggerFactory.getLogger(HttpRequest.class);
-
+public final class HttpRequest {
 	private final HttpMethod method;
 	private final String url;
 	private final String httpVersion;
+	private final Map<String, String> headers;
 
-	private Map<String, String> headers;
+	public static HttpRequest from(BufferedReader reader) {
+		return new HttpRequest(reader);
+	}
 
-	HttpRequest(Socket socket) {
-		BufferedReader reader = getSocketReader(socket);
-		HttpRequestFirstLine firstLine = parseFirstLineElements(reader);
+	private HttpRequest(BufferedReader reader) {
+		final HttpRequestFirstLine firstLine = parseFirstLineElements(reader);
 		this.method = firstLine.method;
 		this.url = firstLine.url;
 		this.httpVersion = firstLine.httpVersion;
+		this.headers = parseHeaders(reader);
+	}
 
+	public HttpMethod getMethod() {
+		return method;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public String getHttpVersion() {
+		return httpVersion;
+	}
+
+	public Map<String, String> getHeaders() {
+		return headers;
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder()
+				.append("HTTP Request\n")
+				.append("============")
+				.append("\nMethod: ").append(this.method.name())
+				.append("\nURL: ").append(this.url)
+				.append("\nHTTP version: ").append(this.httpVersion)
+				.append("\nHeaders:");
+		for (String key : this.headers.keySet()) {
+			builder.append(String.format("\n%s: %s", key, this.headers.get(key)));
+		}
+
+		return builder.toString();
+	}
+
+	private Map<String, String> parseHeaders(BufferedReader reader) {
+		try {
+			final Map<String, String> map = new HashMap<>();
+			String requestLine;
+			while ((requestLine = reader.readLine()) != null && !requestLine.equals("\r\n\r\n") && !requestLine.equals("")) {
+				ImmutablePair<String, String> header = parseHeader(requestLine);
+				map.put(header.getKey(), header.getValue());
+			}
+
+			return map;
+		} catch (IOException e) {
+			throw new InvalidRequestException("Error reading request headers");
+		}
+	}
+
+	private ImmutablePair<String, String> parseHeader(String requestLine) {
+		final String[] lineElements = requestLine.split(":", 2);
+		if (lineElements.length != 2) {
+			throw new InvalidRequestException("Unexpected header format");
+		}
+
+		final String key = lineElements[0].strip();
+		if (key == null || key.equals("")) {
+			throw new InvalidRequestException("Empty header");
+		}
+
+		final String value = lineElements[1].strip();
+		if (value == null || value.equals("")) {
+			throw new InvalidRequestException("Unspecified header value");
+		}
+
+		return ImmutablePair.of(key, value);
 	}
 
 	private HttpRequestFirstLine parseFirstLineElements(BufferedReader reader) {
 		try {
-			String[] lineElements = reader.readLine().split(" ");
-			if (lineElements.length > 3) {
+			final String[] lineElements = reader.readLine().split(" ");
+			if (lineElements.length != 3) {
 				throw new InvalidRequestException("First line of the request has invalid format.");
 			}
 
@@ -70,18 +137,6 @@ public class HttpRequest {
 			this.method = method;
 			this.url = url;
 			this.httpVersion = httpVersion;
-		}
-
-		public HttpMethod getMethod() {
-			return method;
-		}
-
-		public String getUrl() {
-			return url;
-		}
-
-		public String getHttpVersion() {
-			return httpVersion;
 		}
 	}
 }

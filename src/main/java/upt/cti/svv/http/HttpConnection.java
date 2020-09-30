@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class HttpConnection implements Runnable {
+public final class HttpConnection implements Runnable {
 	private static final Logger log = LoggerFactory.getLogger(HttpConnection.class);
 
 	private final Socket clientSocket;
@@ -25,17 +25,9 @@ public class HttpConnection implements Runnable {
 		try {
 			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			HttpRequest request = HttpRequest.from(in);
 
-			String inputLine;
-
-			while ((inputLine = in.readLine()) != null) {
-				System.out.println("Server: " + inputLine);
-				out.println(inputLine);
-
-				if (inputLine.trim().equals(""))
-					break;
-			}
-
+			out.println(request);
 			out.close();
 			in.close();
 			clientSocket.close();

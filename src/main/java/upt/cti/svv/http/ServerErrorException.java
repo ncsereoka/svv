@@ -1,7 +1,7 @@
 package upt.cti.svv.http;
 
-public class ServerErrorException extends RuntimeException {
-	ServerErrorException(String msg) {
+public final class ServerErrorException extends RuntimeException {
+	public ServerErrorException(String msg) {
 		super(msg);
 	}
 }
