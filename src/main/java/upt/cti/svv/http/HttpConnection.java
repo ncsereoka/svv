@@ -32,8 +32,7 @@ public final class HttpConnection implements Runnable {
 			in.close();
 			clientSocket.close();
 		} catch (IOException e) {
-			log.error("Error during server connection");
-			System.exit(1);
+			throw new ServerErrorException("Error during server connection");
 		}
 	}
 }
