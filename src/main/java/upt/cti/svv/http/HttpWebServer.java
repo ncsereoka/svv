@@ -1,9 +1,14 @@
 package upt.cti.svv.http;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
 public class HttpWebServer {
+	private static final Logger log = LoggerFactory.getLogger(HttpWebServer.class);
+
 	private ServerSocket serverSocket;
 	private int port;
 
@@ -20,34 +25,42 @@ public class HttpWebServer {
 	}
 
 	public void listen() {
-		startListening();
+		bindToPort();
 		try {
-			try {
-				while (true) {
-					System.out.println("Waiting for Connection");
-					new HttpConnection(serverSocket.accept());
-				}
-			} catch (IOException e) {
-				System.err.println("Accept failed.");
-				System.exit(1);
-			}
+			waitForConnections();
 		} finally {
-			try {
-				serverSocket.close();
-			} catch (IOException e) {
-				System.err.println("Could not close port: 10008.");
-				System.exit(1);
-			}
+			closeServerSocket();
 		}
 	}
 
-	private void startListening() {
+	private void waitForConnections() {
+		try {
+			while (true) {
+				log.info("Waiting for new connection...");
+				new HttpConnection(serverSocket.accept());
+			}
+		} catch (IOException e) {
+			log.error("Failed to accept new connection");
+			System.exit(1);
+		}
+	}
+
+	private void closeServerSocket() {
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+			log.error("Could not close port {}", this.port);
+			System.exit(1);
+		}
+	}
+
+	private void bindToPort() {
 		try {
 			this.serverSocket = new ServerSocket(this.port);
 		} catch (IOException e) {
-			System.err.println("Could not listen on port: " + port);
+			log.error("Could not listen on port: {}", this.port);
 			System.exit(1);
 		}
-		System.out.println("Server listening on port " + port);
+		log.info("Server listening on port {}...", this.port);
 	}
 }

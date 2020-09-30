@@ -1,5 +1,8 @@
 package upt.cti.svv.http;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,6 +10,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class HttpConnection implements Runnable {
+	private static final Logger log = LoggerFactory.getLogger(HttpConnection.class);
+
 	private final Socket clientSocket;
 
 	public HttpConnection(Socket clientSocket) {
@@ -15,7 +20,7 @@ public class HttpConnection implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("New Communication Thread Started");
+		log.info("New client connection");
 
 		try {
 			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -35,7 +40,7 @@ public class HttpConnection implements Runnable {
 			in.close();
 			clientSocket.close();
 		} catch (IOException e) {
-			System.err.println("Problem with Communication Server");
+			log.error("Error during server connection");
 			System.exit(1);
 		}
 	}
