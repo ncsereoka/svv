@@ -9,7 +9,7 @@ public final class SvvitchInterface {
 	private final JFrame frame;
 
 	public SvvitchInterface() {
-		this.frame = new InterfaceBuilder().frame();
+		this.frame = InterfaceBuilder.newInterface();
 		updateToStopped();
 	}
 

@@ -9,7 +9,7 @@ import java.awt.*;
 import java.text.NumberFormat;
 
 public final class InterfaceBuilder {
-	public JFrame frame() {
+	public static JFrame newInterface() {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(500, 400);
@@ -18,7 +18,7 @@ public final class InterfaceBuilder {
 		return frame;
 	}
 
-	private JPanel mainPanel() {
+	private static JPanel mainPanel() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -27,7 +27,7 @@ public final class InterfaceBuilder {
 		return mainPanel;
 	}
 
-	private JPanel upperPanel() {
+	private static JPanel upperPanel() {
 		JPanel upperPanel = new JPanel();
 		upperPanel.setLayout(new BoxLayout(upperPanel, BoxLayout.X_AXIS));
 		upperPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -36,7 +36,7 @@ public final class InterfaceBuilder {
 		return upperPanel;
 	}
 
-	private JPanel controlPanel() {
+	private static JPanel controlPanel() {
 		JPanel controlPanel = new JPanel();
 		controlPanel.setBorder(BorderFactory.createTitledBorder("WebServer control"));
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
@@ -45,7 +45,7 @@ public final class InterfaceBuilder {
 		return controlPanel;
 	}
 
-	private JCheckBox controlPanelCheckBox() {
+	private static JCheckBox controlPanelCheckBox() {
 		JCheckBox maintenanceCheckBox = new JCheckBox("Switch to maintenance mode");
 		maintenanceCheckBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 		ComponentMap.put(ComponentMap.Identifier.MAINTENANCE_CHECKBOX, maintenanceCheckBox);
@@ -53,7 +53,7 @@ public final class InterfaceBuilder {
 		return maintenanceCheckBox;
 	}
 
-	private JButton controlPanelButton() {
+	private static JButton controlPanelButton() {
 		JButton powerButton = new JButton("Start server");
 		powerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		powerButton.addActionListener(new PowerButtonListener());
@@ -61,7 +61,7 @@ public final class InterfaceBuilder {
 		return powerButton;
 	}
 
-	private JPanel lowerPanel() {
+	private static JPanel lowerPanel() {
 		JPanel inferiorPanel = new JPanel();
 		inferiorPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		inferiorPanel.setLayout(new BoxLayout(inferiorPanel, BoxLayout.Y_AXIS));
@@ -69,7 +69,7 @@ public final class InterfaceBuilder {
 		return inferiorPanel;
 	}
 
-	private JPanel configurationPanel() {
+	private static JPanel configurationPanel() {
 		JPanel configurationPanel = new JPanel();
 		configurationPanel.setBorder(BorderFactory.createTitledBorder("WebServer configuration"));
 		configurationPanel.setLayout(new BoxLayout(configurationPanel, BoxLayout.Y_AXIS));
@@ -79,7 +79,7 @@ public final class InterfaceBuilder {
 		return configurationPanel;
 	}
 
-	private JPanel configurationPanelMaintenanceSection() {
+	private static JPanel configurationPanelMaintenanceSection() {
 		JPanel panel = new JPanel();
 
 		panel.add(new JLabel("Maintenance directory"));
@@ -98,7 +98,7 @@ public final class InterfaceBuilder {
 		return panel;
 	}
 
-	private JPanel configurationPanelWebRootSection() {
+	private static JPanel configurationPanelWebRootSection() {
 		JPanel panel = new JPanel();
 
 		panel.add(new JLabel("Web root directory"));
@@ -117,7 +117,7 @@ public final class InterfaceBuilder {
 		return panel;
 	}
 
-	private JPanel configurationPanelPortSection() {
+	private static JPanel configurationPanelPortSection() {
 		JPanel portEntry = new JPanel();
 		portEntry.setLayout(new BoxLayout(portEntry, BoxLayout.X_AXIS));
 		JLabel portLabel = new JLabel("Server listening on port");
@@ -130,7 +130,7 @@ public final class InterfaceBuilder {
 		return portEntry;
 	}
 
-	private JPanel infoPanel() {
+	private static JPanel infoPanel() {
 		JPanel infoPanel = new JPanel();
 		infoPanel.setBorder(BorderFactory.createTitledBorder("WebServer info"));
 		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
@@ -140,7 +140,7 @@ public final class InterfaceBuilder {
 		return infoPanel;
 	}
 
-	private JPanel infoPanelEntry(String staticLabelText, ComponentMap.Identifier component) {
+	private static JPanel infoPanelEntry(String staticLabelText, ComponentMap.Identifier component) {
 		JPanel entry = new JPanel();
 		entry.setLayout(new BoxLayout(entry, BoxLayout.X_AXIS));
 		entry.add(new JLabel(staticLabelText));
@@ -152,5 +152,9 @@ public final class InterfaceBuilder {
 		entry.add(variableLabel);
 
 		return entry;
+	}
+
+	private InterfaceBuilder() {
+		throw new UnsupportedOperationException();
 	}
 }
