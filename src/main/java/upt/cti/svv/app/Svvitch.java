@@ -1,4 +1,4 @@
-package upt.cti.svv;
+package upt.cti.svv.app;
 
 import upt.cti.svv.gui.SvvitchInterface;
 import upt.cti.svv.http.HttpWebServer;
