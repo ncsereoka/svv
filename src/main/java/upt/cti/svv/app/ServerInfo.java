@@ -1,31 +1,60 @@
 package upt.cti.svv.app;
 
 public final class ServerInfo {
-	private String status;
+	private ApplicationStatus status;
 	private String address;
-	private String port;
+	private int port;
 
-	public ServerInfo(String status, String address, String port) {
+	public ServerInfo(ApplicationStatus status, String address, int port) {
 		this.status = status;
 		this.address = address;
 		this.port = port;
 	}
 
 	public void updateToStopped() {
-		this.status = "not running";
-		this.address = "not running";
-		this.port = "not running";
+		this.status = ApplicationStatus.STOPPED;
+		this.address = "";
+		this.port = 0;
 	}
 
-	public void updateToMaintenance(String address, String port) {
-		this.status = "maintenance";
+	public void updateToMaintenance(String address, int port) {
+		this.status = ApplicationStatus.MAINTENANCE;
 		this.address = address;
 		this.port = port;
 	}
 
-	public void updateToRunning(String address, String port) {
-		this.status = "running...";
+	public void updateToRunning(String address, int port) {
+		this.status = ApplicationStatus.RUNNING;
 		this.address = address;
 		this.port = port;
+	}
+
+	public ApplicationStatus getStatus() {
+		return status;
+	}
+
+	public String getStatusForGui() {
+		switch (status) {
+			case RUNNING:
+				return "running...";
+			case STOPPED:
+				return "not running";
+			case MAINTENANCE:
+				return "running";
+			default:
+				return "";
+		}
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getPortForGui() {
+		return String.valueOf(port);
+	}
+
+	public int getPort() {
+		return port;
 	}
 }

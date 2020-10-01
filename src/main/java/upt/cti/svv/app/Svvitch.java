@@ -11,9 +11,11 @@ public final class Svvitch {
 	private static ApplicationStatus state = ApplicationStatus.STOPPED;
 
 	public static void main(String[] args) {
-		if (runSilently()) {
+		if (Configuration.runSilently()) {
+			ServerInfo info = new ServerInfo(ApplicationStatus.RUNNING, Configuration.getDefaultAddress(), Configuration.defaultPort());
 //			new HttpWebServer().listen();
 		} else {
+			ServerInfo info = new ServerInfo(ApplicationStatus.STOPPED, Configuration.getDefaultAddress(), Configuration.defaultPort());
 			gui.display();
 		}
 	}
@@ -30,16 +32,5 @@ public final class Svvitch {
 		return state;
 	}
 
-	private static boolean runSilently() {
-		try (InputStream in = Svvitch.class.getClassLoader().getResourceAsStream("application.properties");) {
-			Properties prop = new Properties();
-			if (in != null) {
-				prop.load(in);
-			}
-			final String guiString = prop.getProperty("silent");
-			return guiString != null && !guiString.equals("");
-		} catch (IOException e) {
-			return false;
-		}
-	}
+
 }
