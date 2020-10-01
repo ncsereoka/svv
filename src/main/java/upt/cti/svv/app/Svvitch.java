@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public final class Svvitch {
 	private static final SvvitchInterface gui = new SvvitchInterface();
-	private static ApplicationState state = ApplicationState.STOPPED;
+	private static ApplicationStatus state = ApplicationStatus.STOPPED;
 
 	public static void main(String[] args) {
 		if (runSilently()) {
@@ -22,11 +22,11 @@ public final class Svvitch {
 		gui.update(state);
 	}
 
-	public static void setState(ApplicationState newState) {
+	public static void setState(ApplicationStatus newState) {
 		state = newState;
 	}
 
-	public static ApplicationState getState() {
+	public static ApplicationStatus getState() {
 		return state;
 	}
 

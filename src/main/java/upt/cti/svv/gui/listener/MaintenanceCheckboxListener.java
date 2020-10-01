@@ -6,13 +6,13 @@ import upt.cti.svv.app.Svvitch;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public final class PowerButtonListener implements ActionListener {
+public class MaintenanceCheckboxListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
-		if (Svvitch.getState().equals(ApplicationStatus.STOPPED)) {
-			Svvitch.setState(ApplicationStatus.RUNNING);
+		if (Svvitch.getState().equals(ApplicationStatus.RUNNING)) {
+			Svvitch.setState(ApplicationStatus.MAINTENANCE);
 		} else {
-			Svvitch.setState(ApplicationStatus.STOPPED);
+			Svvitch.setState(ApplicationStatus.RUNNING);
 		}
 		Svvitch.updateGui();
 	}

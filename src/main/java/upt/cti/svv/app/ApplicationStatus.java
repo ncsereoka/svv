@@ -1,6 +1,6 @@
 package upt.cti.svv.app;
 
-public enum ApplicationState {
+public enum ApplicationStatus {
 	STOPPED,
 	RUNNING,
 	MAINTENANCE;
