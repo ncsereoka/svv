@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class ComponentMap {
-	private static Map<String, JComponent> map = new HashMap<>();
+	private static final Map<StatefulComponent, JComponent> map = new HashMap<>();
 
-	public static void put(String name, JComponent component) {
-		map.put(name, component);
+	public static void put(StatefulComponent statefulComponent, JComponent component) {
+		map.put(statefulComponent, component);
 	}
 
-	public static JComponent get(String name) {
-		return map.get(name);
+	public static JComponent get(StatefulComponent components) {
+		return map.get(components);
 	}
 }

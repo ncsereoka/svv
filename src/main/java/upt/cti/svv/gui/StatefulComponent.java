@@ -1,0 +1,12 @@
+package upt.cti.svv.gui;
+
+public enum StatefulComponent {
+	SERVER_STATUS,
+	SERVER_ADDRESS,
+	SERVER_PORT,
+	POWER_BUTTON,
+	MAINTENANCE_CHECKBOX,
+	PORT_FIELD,
+	WEBROOT_DIR,
+	MAINTENANCE_DIR;
+}
