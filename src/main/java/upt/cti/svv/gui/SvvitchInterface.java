@@ -58,7 +58,7 @@ public class SvvitchInterface {
 	private JPanel buildInfoPanel() {
 		JPanel infoPanel = new JPanel();
 		infoPanel.setBorder(BorderFactory.createTitledBorder("WebServer info"));
-		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.X_AXIS));
+		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 		infoPanel.add(buildInfoEntry("Server status:", StatefulComponents.SERVER_STATUS));
 		infoPanel.add(buildInfoEntry("Server address:", StatefulComponents.SERVER_ADDRESS));
 		infoPanel.add(buildInfoEntry("Server port:", StatefulComponents.SERVER_PORT));
@@ -67,11 +67,12 @@ public class SvvitchInterface {
 
 	private JPanel buildInfoEntry(String staticLabelText, StatefulComponents component) {
 		JPanel entry = new JPanel();
-		entry.setLayout(new BoxLayout(entry, BoxLayout.Y_AXIS));
+		entry.setLayout(new BoxLayout(entry, BoxLayout.X_AXIS));
 		JLabel staticLabel = new JLabel(staticLabelText);
-		JLabel variableLabel = new JLabel();
+		JLabel variableLabel = new JLabel("not running");
 		ComponentMap.put(component.name(), variableLabel);
 		entry.add(staticLabel);
+		entry.add(Box.createHorizontalGlue());
 		entry.add(variableLabel);
 		return entry;
 	}
