@@ -1,6 +1,7 @@
 package upt.cti.svv.gui;
 
 import upt.cti.svv.app.ApplicationState;
+import upt.cti.svv.gui.listener.PowerButtonListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,14 +14,19 @@ public final class SvvitchInterface {
 
 	public SvvitchInterface() {
 		this.frame = frame();
-		setTitle(ApplicationState.STOPPED);
+		setFrameTitle(ApplicationState.STOPPED);
 	}
 
 	public void display() {
 		this.frame.setVisible(true);
 	}
 
-	public void setTitle(ApplicationState state) {
+
+	public void update(ApplicationState state) {
+		setFrameTitle(state);
+	}
+
+	public void setFrameTitle(ApplicationState state) {
 		final String title = String.format("%s - [%s]", APPLICATION_NAME, state.name());
 		this.frame.setTitle(title);
 	}
@@ -59,12 +65,13 @@ public final class SvvitchInterface {
 
 		JButton powerButton = new JButton("Start server");
 		powerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		ComponentMap.put(StatefulComponent.POWER_BUTTON, powerButton);
+		powerButton.addActionListener(new PowerButtonListener());
+		ComponentMap.put(ComponentMap.Identifier.POWER_BUTTON, powerButton);
 		controlPanel.add(powerButton);
 
 		JCheckBox maintenanceCheckBox = new JCheckBox("Switch to maintenance mode");
 		maintenanceCheckBox.setAlignmentX(Component.CENTER_ALIGNMENT);
-		ComponentMap.put(StatefulComponent.MAINTENANCE_CHECKBOX, maintenanceCheckBox);
+		ComponentMap.put(ComponentMap.Identifier.MAINTENANCE_CHECKBOX, maintenanceCheckBox);
 		controlPanel.add(maintenanceCheckBox);
 		return controlPanel;
 	}
@@ -96,7 +103,7 @@ public final class SvvitchInterface {
 
 		JLabel selectedLabel = new JLabel("selected");
 		selectedLabel.setBorder(BorderFactory.createEtchedBorder());
-		ComponentMap.put(StatefulComponent.MAINTENANCE_DIR, selectedLabel);
+		ComponentMap.put(ComponentMap.Identifier.MAINTENANCE_DIR, selectedLabel);
 		panel.add(selectedLabel);
 
 		panel.add(Box.createHorizontalGlue());
@@ -115,7 +122,7 @@ public final class SvvitchInterface {
 
 		JLabel selectedLabel = new JLabel("selected");
 		selectedLabel.setBorder(BorderFactory.createEtchedBorder());
-		ComponentMap.put(StatefulComponent.WEBROOT_DIR, selectedLabel);
+		ComponentMap.put(ComponentMap.Identifier.WEBROOT_DIR, selectedLabel);
 		panel.add(selectedLabel);
 
 		panel.add(Box.createHorizontalGlue());
@@ -135,7 +142,7 @@ public final class SvvitchInterface {
 		portEntry.add(Box.createHorizontalGlue());
 
 		JFormattedTextField portField = new JFormattedTextField(NumberFormat.getCurrencyInstance());
-		ComponentMap.put(StatefulComponent.PORT_FIELD, portField);
+		ComponentMap.put(ComponentMap.Identifier.PORT_FIELD, portField);
 		portEntry.add(portField);
 		return portEntry;
 	}
@@ -144,13 +151,13 @@ public final class SvvitchInterface {
 		JPanel infoPanel = new JPanel();
 		infoPanel.setBorder(BorderFactory.createTitledBorder("WebServer info"));
 		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-		infoPanel.add(infoPanelEntry("Server status:", StatefulComponent.SERVER_STATUS));
-		infoPanel.add(infoPanelEntry("Server address:", StatefulComponent.SERVER_ADDRESS));
-		infoPanel.add(infoPanelEntry("Server port:", StatefulComponent.SERVER_PORT));
+		infoPanel.add(infoPanelEntry("Server status:", ComponentMap.Identifier.SERVER_STATUS));
+		infoPanel.add(infoPanelEntry("Server address:", ComponentMap.Identifier.SERVER_ADDRESS));
+		infoPanel.add(infoPanelEntry("Server port:", ComponentMap.Identifier.SERVER_PORT));
 		return infoPanel;
 	}
 
-	private JPanel infoPanelEntry(String staticLabelText, StatefulComponent component) {
+	private JPanel infoPanelEntry(String staticLabelText, ComponentMap.Identifier component) {
 		JPanel entry = new JPanel();
 		entry.setLayout(new BoxLayout(entry, BoxLayout.X_AXIS));
 		entry.add(new JLabel(staticLabelText));
