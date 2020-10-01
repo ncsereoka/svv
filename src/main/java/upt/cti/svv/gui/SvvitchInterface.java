@@ -2,6 +2,8 @@ package upt.cti.svv.gui;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.nimbus.State;
+import java.util.HashMap;
 
 public class SvvitchInterface {
 	private final JFrame frame;
@@ -39,6 +41,15 @@ public class SvvitchInterface {
 	private JPanel buildControlPanel() {
 		JPanel controlPanel = new JPanel();
 		controlPanel.setBorder(BorderFactory.createTitledBorder("WebServer control"));
+		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+
+		JButton powerButton = new JButton("Start server");
+		ComponentMap.put(StatefulComponents.POWER_BUTTON.name(), powerButton);
+		controlPanel.add(powerButton);
+
+		JCheckBox maintenanceCheckBox = new JCheckBox("Switch to maintenance mode");
+		ComponentMap.put(StatefulComponents.MAINTENANCE_CHECKBOX.name(), maintenanceCheckBox);
+		controlPanel.add(maintenanceCheckBox);
 		return controlPanel;
 	}
 
@@ -68,12 +79,14 @@ public class SvvitchInterface {
 	private JPanel buildInfoEntry(String staticLabelText, StatefulComponents component) {
 		JPanel entry = new JPanel();
 		entry.setLayout(new BoxLayout(entry, BoxLayout.X_AXIS));
-		JLabel staticLabel = new JLabel(staticLabelText);
+		entry.add(new JLabel(staticLabelText));
+		entry.add(Box.createHorizontalGlue());
+
+		// Save this variable label to the global component map
 		JLabel variableLabel = new JLabel("not running");
 		ComponentMap.put(component.name(), variableLabel);
-		entry.add(staticLabel);
-		entry.add(Box.createHorizontalGlue());
 		entry.add(variableLabel);
+
 		return entry;
 	}
 
