@@ -40,19 +40,25 @@ public final class InterfaceBuilder {
 		JPanel controlPanel = new JPanel();
 		controlPanel.setBorder(BorderFactory.createTitledBorder("WebServer control"));
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+		controlPanel.add(controlPanelButton());
+		controlPanel.add(controlPanelCheckBox());
+		return controlPanel;
+	}
 
-		JButton powerButton = new JButton("Start server");
-		powerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		powerButton.addActionListener(new PowerButtonListener());
-		ComponentMap.put(ComponentMap.Identifier.POWER_BUTTON, powerButton);
-		controlPanel.add(powerButton);
-
+	private JCheckBox controlPanelCheckBox() {
 		JCheckBox maintenanceCheckBox = new JCheckBox("Switch to maintenance mode");
 		maintenanceCheckBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 		ComponentMap.put(ComponentMap.Identifier.MAINTENANCE_CHECKBOX, maintenanceCheckBox);
 		maintenanceCheckBox.addActionListener(new MaintenanceCheckboxListener());
-		controlPanel.add(maintenanceCheckBox);
-		return controlPanel;
+		return maintenanceCheckBox;
+	}
+
+	private JButton controlPanelButton() {
+		JButton powerButton = new JButton("Start server");
+		powerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		powerButton.addActionListener(new PowerButtonListener());
+		ComponentMap.put(ComponentMap.Identifier.POWER_BUTTON, powerButton);
+		return powerButton;
 	}
 
 	private JPanel lowerPanel() {
@@ -67,11 +73,9 @@ public final class InterfaceBuilder {
 		JPanel configurationPanel = new JPanel();
 		configurationPanel.setBorder(BorderFactory.createTitledBorder("WebServer configuration"));
 		configurationPanel.setLayout(new BoxLayout(configurationPanel, BoxLayout.Y_AXIS));
-
 		configurationPanel.add(configurationPanelPortSection());
 		configurationPanel.add(configurationPanelWebRootSection());
 		configurationPanel.add(configurationPanelMaintenanceSection());
-
 		return configurationPanel;
 	}
 
