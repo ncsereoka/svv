@@ -2,7 +2,6 @@ package upt.cti.svv.gui.listener;
 
 import upt.cti.svv.app.ApplicationStatus;
 import upt.cti.svv.app.ServerInfo;
-import upt.cti.svv.app.Svvitch;
 import upt.cti.svv.gui.SvvitchInterface;
 
 import java.awt.event.ActionEvent;
