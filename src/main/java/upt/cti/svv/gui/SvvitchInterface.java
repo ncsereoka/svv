@@ -2,31 +2,36 @@ package upt.cti.svv.gui;
 
 import upt.cti.svv.app.ApplicationStatus;
 import upt.cti.svv.app.ServerInfo;
+import upt.cti.svv.gui.listener.MaintenanceCheckboxListener;
+import upt.cti.svv.gui.listener.PowerButtonListener;
 
 import javax.swing.*;
 
 public final class SvvitchInterface {
 	private static final String APPLICATION_NAME = "Svvitch";
 	private final JFrame frame;
-	private final ServerInfo info;
 
-	public SvvitchInterface() {
+	public SvvitchInterface(ServerInfo info) {
 		this.frame = InterfaceBuilder.newInterface();
-		this.info = new ServerInfo();
 		updateToStopped();
+
+		((JButton) ComponentMap.get(ComponentMap.Identifier.POWER_BUTTON))
+				.addActionListener(new PowerButtonListener(this, info));
+		((JCheckBox) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_CHECKBOX))
+				.addActionListener(new MaintenanceCheckboxListener(this, info));
 	}
 
 	public void display() {
 		this.frame.setVisible(true);
 	}
 
-	public void update(ApplicationStatus state) {
-		switch (state) {
+	public void update(ServerInfo info) {
+		switch (info.getStatus()) {
 			case RUNNING:
-				updateToRunning();
+				updateToRunning(info);
 				break;
 			case MAINTENANCE:
-				updateToMaintenance();
+				updateToMaintenance(info);
 				break;
 			case STOPPED:
 				updateToStopped();
@@ -48,7 +53,7 @@ public final class SvvitchInterface {
 		updateConfigurationMaintenance(true);
 	}
 
-	private void updateToMaintenance() {
+	private void updateToMaintenance(ServerInfo info) {
 		updateFrameTitle(ApplicationStatus.MAINTENANCE);
 		updateServerInfoStatus("maintenance");
 		updateServerInfoAddress(info.getAddress());
@@ -58,7 +63,7 @@ public final class SvvitchInterface {
 		updateConfigurationMaintenance(false);
 	}
 
-	private void updateToRunning() {
+	private void updateToRunning(ServerInfo info) {
 		updateFrameTitle(ApplicationStatus.RUNNING);
 		updatePowerButtonText("Stop server");
 		updateMaintenanceCheckbox(true);

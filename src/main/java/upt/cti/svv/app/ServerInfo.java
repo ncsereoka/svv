@@ -14,27 +14,23 @@ public final class ServerInfo {
 	/**
 	 * Default server settings
 	 */
-	public ServerInfo() {
-		this.status = ApplicationStatus.STOPPED;
+	public ServerInfo(boolean silent) {
+		this.status = silent ? ApplicationStatus.RUNNING : ApplicationStatus.STOPPED;
 		this.address = Configuration.getDefaultAddress();
 		this.port = Configuration.defaultPort();
 	}
 
 	public void updateToStopped() {
 		this.status = ApplicationStatus.STOPPED;
-		this.address = "";
-		this.port = 0;
 	}
 
-	public void updateToMaintenance(String address, int port) {
+	public void updateToMaintenance(int port) {
 		this.status = ApplicationStatus.MAINTENANCE;
-		this.address = address;
 		this.port = port;
 	}
 
-	public void updateToRunning(String address, int port) {
+	public void updateToRunning(int port) {
 		this.status = ApplicationStatus.RUNNING;
-		this.address = address;
 		this.port = port;
 	}
 

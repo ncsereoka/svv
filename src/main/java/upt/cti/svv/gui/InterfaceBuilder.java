@@ -49,14 +49,12 @@ public final class InterfaceBuilder {
 		JCheckBox maintenanceCheckBox = new JCheckBox("Switch to maintenance mode");
 		maintenanceCheckBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 		ComponentMap.put(ComponentMap.Identifier.MAINTENANCE_CHECKBOX, maintenanceCheckBox);
-		maintenanceCheckBox.addActionListener(new MaintenanceCheckboxListener());
 		return maintenanceCheckBox;
 	}
 
 	private static JButton controlPanelButton() {
 		JButton powerButton = new JButton("Start server");
 		powerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		powerButton.addActionListener(new PowerButtonListener());
 		ComponentMap.put(ComponentMap.Identifier.POWER_BUTTON, powerButton);
 		return powerButton;
 	}
