@@ -93,7 +93,14 @@ public final class InterfaceBuilder {
 
 		JFileChooser maintenanceFileChooser = new JFileChooser();
 		JButton chooserButton = new JButton(",,,");
+		ComponentMap.put(ComponentMap.Identifier.MAINTENANCE_DIR_BUTTON, chooserButton);
 		panel.add(chooserButton);
+
+		panel.add(Box.createHorizontalGlue());
+
+		JLabel validLabel = new JLabel("valid");
+		ComponentMap.put(ComponentMap.Identifier.MAINTENANCE_DIR_VALID, validLabel);
+		panel.add(validLabel);
 
 		return panel;
 	}
@@ -112,7 +119,14 @@ public final class InterfaceBuilder {
 
 		JFileChooser webRootFileChooser = new JFileChooser();
 		JButton chooserButton = new JButton(",,,");
+		ComponentMap.put(ComponentMap.Identifier.WEBROOT_DIR_BUTTON, chooserButton);
 		panel.add(chooserButton);
+
+		panel.add(Box.createHorizontalGlue());
+
+		JLabel validLabel = new JLabel("valid");
+		ComponentMap.put(ComponentMap.Identifier.WEBROOT_DIR_VALID, validLabel);
+		panel.add(validLabel);
 
 		return panel;
 	}

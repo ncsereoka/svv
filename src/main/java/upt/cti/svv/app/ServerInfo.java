@@ -11,6 +11,15 @@ public final class ServerInfo {
 		this.port = port;
 	}
 
+	/**
+	 * Default server settings
+	 */
+	public ServerInfo() {
+		this.status = ApplicationStatus.STOPPED;
+		this.address = Configuration.getDefaultAddress();
+		this.port = Configuration.defaultPort();
+	}
+
 	public void updateToStopped() {
 		this.status = ApplicationStatus.STOPPED;
 		this.address = "";
