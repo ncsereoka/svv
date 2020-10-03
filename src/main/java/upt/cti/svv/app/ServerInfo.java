@@ -10,4 +10,8 @@ public interface ServerInfo {
 	ApplicationStatus getStatus();
 
 	int getPort();
+
+	String getAddress();
+
+	String getPortForGui();
 }

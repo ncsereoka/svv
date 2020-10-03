@@ -1,6 +1,6 @@
 package upt.cti.svv.app;
 
-public final class DefaultServerInfo implements ServerInfo {
+public class DefaultServerInfo implements ServerInfo {
 	private ApplicationStatus status;
 	private final String address;
 	private int port;
@@ -49,10 +49,12 @@ public final class DefaultServerInfo implements ServerInfo {
 		}
 	}
 
+	@Override
 	public String getAddress() {
 		return address;
 	}
 
+	@Override
 	public String getPortForGui() {
 		return String.valueOf(port);
 	}

@@ -2,12 +2,13 @@ package upt.cti.svv.gui;
 
 import upt.cti.svv.app.ApplicationStatus;
 import upt.cti.svv.app.DefaultServerInfo;
+import upt.cti.svv.app.ServerInfo;
 import upt.cti.svv.gui.listener.MaintenanceCheckboxListener;
 import upt.cti.svv.gui.listener.PowerButtonListener;
 
 import javax.swing.*;
 
-public final class DefaultSvvitchInterface implements SvvitchInterface {
+public class DefaultSvvitchInterface implements SvvitchInterface {
 	private static final String APPLICATION_NAME = "Svvitch";
 	private final JFrame frame;
 
@@ -26,7 +27,7 @@ public final class DefaultSvvitchInterface implements SvvitchInterface {
 	}
 
 	@Override
-	public void update(DefaultServerInfo info) {
+	public void update(ServerInfo info) {
 		switch (info.getStatus()) {
 			case RUNNING:
 				updateToRunning(info);
@@ -54,7 +55,7 @@ public final class DefaultSvvitchInterface implements SvvitchInterface {
 		updateConfigurationMaintenance(true);
 	}
 
-	private void updateToMaintenance(DefaultServerInfo info) {
+	private void updateToMaintenance(ServerInfo info) {
 		updateFrameTitle(ApplicationStatus.MAINTENANCE);
 		updateServerInfoStatus("maintenance");
 		updateServerInfoAddress(info.getAddress());
@@ -64,7 +65,7 @@ public final class DefaultSvvitchInterface implements SvvitchInterface {
 		updateConfigurationMaintenance(false);
 	}
 
-	private void updateToRunning(DefaultServerInfo info) {
+	private void updateToRunning(ServerInfo info) {
 		updateFrameTitle(ApplicationStatus.RUNNING);
 		updatePowerButtonText("Stop server");
 		updateMaintenanceCheckbox(true);

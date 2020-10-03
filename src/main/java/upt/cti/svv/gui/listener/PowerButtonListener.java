@@ -7,7 +7,7 @@ import upt.cti.svv.gui.SvvitchInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public final class PowerButtonListener implements ActionListener {
+public class PowerButtonListener implements ActionListener {
 	private final SvvitchInterface gui;
 	private final ServerInfo info;
 

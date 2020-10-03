@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public final class HttpConnection implements Runnable {
+public class HttpConnection implements Runnable {
 	private static final Logger log = LoggerFactory.getLogger(HttpConnection.class);
 
 	private final Socket clientSocket;

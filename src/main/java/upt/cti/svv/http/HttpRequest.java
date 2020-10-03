@@ -1,6 +1,5 @@
 package upt.cti.svv.http;
 
-import upt.cti.svv.util.ExceptionWrapper;
 import upt.cti.svv.util.ImmutablePair;
 
 import java.io.BufferedReader;
@@ -10,7 +9,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class HttpRequest {
+public class HttpRequest {
 	private final HttpMethod method;
 	private final String url;
 	private final String httpVersion;

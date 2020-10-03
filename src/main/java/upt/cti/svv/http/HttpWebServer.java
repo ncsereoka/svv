@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public final class HttpWebServer {
+public class HttpWebServer {
 	private static final Logger log = LoggerFactory.getLogger(HttpWebServer.class);
 
 	private ServerSocket serverSocket;
