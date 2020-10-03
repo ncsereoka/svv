@@ -1,5 +1,5 @@
 package upt.cti.svv.gui.listener;
 
-public interface SvvitchDirectoryChooser {
+public interface ValidDirectoryChooser {
 	String validityString();
 }

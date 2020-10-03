@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class MaintenanceDirectoryListener implements ActionListener, SvvitchDirectoryChooser {
+public class MaintenanceDirectoryListener implements ActionListener, ValidDirectoryChooser {
 	private final JLabel folderLabel;
 	private final JLabel validLabel;
 	private final ServerInfo info;
