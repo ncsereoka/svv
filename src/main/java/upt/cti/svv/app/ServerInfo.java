@@ -20,4 +20,8 @@ public interface ServerInfo {
 	void setWebRootDir(File selectedDir);
 
 	void setMaintenanceDir(File selectedDir);
+
+	String getWebRootDirForGui();
+
+	String getMaintenanceDirForGui();
 }

@@ -41,21 +41,30 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		}
 	}
 
-	private void setUpListeners(DefaultServerInfo info) {
+	private void setUpListeners(ServerInfo info) {
 		((JButton) ComponentMap.get(ComponentMap.Identifier.POWER_BUTTON))
 				.addActionListener(new PowerButtonListener(this, info));
 		((JCheckBox) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_CHECKBOX))
 				.addActionListener(new MaintenanceCheckboxListener(this, info));
 
-		JLabel webRootSelected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR));
-		JLabel webRootValid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_VALID));
-		((JButton) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_BUTTON))
-				.addActionListener(new WebRootDirectoryListener(webRootSelected, webRootValid, info));
+		setUpWebRootRelated(info);
+		setUpMaintenanceRelated(info);
+	}
 
-		JLabel maintenanceSelected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR));
-		JLabel maintenanceValid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR_VALID));
+	private void setUpMaintenanceRelated(ServerInfo info) {
+		JLabel selected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR));
+		selected.setText(info.getMaintenanceDirForGui());
+		JLabel valid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR_VALID));
 		((JButton) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR_BUTTON))
-				.addActionListener(new MaintenanceDirectoryListener(maintenanceSelected, maintenanceValid, info));
+				.addActionListener(new MaintenanceDirectoryListener(selected, valid, info));
+	}
+
+	private void setUpWebRootRelated(ServerInfo info) {
+		JLabel selected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR));
+		selected.setText(info.getWebRootDirForGui());
+		JLabel valid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_VALID));
+		((JButton) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_BUTTON))
+				.addActionListener(new WebRootDirectoryListener(selected, valid, info));
 	}
 
 	private void updateToStopped() {

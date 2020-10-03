@@ -66,4 +66,14 @@ public class DefaultServerInfo implements ServerInfo {
 	public void setMaintenanceDir(File selectedDir) {
 		this.maintenanceDir = selectedDir;
 	}
+
+	@Override
+	public String getWebRootDirForGui() {
+		return webRootDir.getAbsolutePath();
+	}
+
+	@Override
+	public String getMaintenanceDirForGui() {
+		return maintenanceDir.getAbsolutePath();
+	}
 }
