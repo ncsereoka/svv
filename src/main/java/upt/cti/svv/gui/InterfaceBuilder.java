@@ -3,7 +3,6 @@ package upt.cti.svv.gui;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.text.NumberFormat;
 
 public final class InterfaceBuilder {
 	public static JFrame newInterface() {

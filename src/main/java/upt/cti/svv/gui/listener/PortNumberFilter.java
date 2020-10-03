@@ -7,14 +7,14 @@ import javax.swing.text.DocumentFilter;
 
 public class PortNumberFilter extends DocumentFilter {
 	@Override
-	public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+	public void insertString(FilterBypass fb, int offset, String s, AttributeSet set) throws BadLocationException {
 		Document doc = fb.getDocument();
 		StringBuilder sb = new StringBuilder();
 		sb.append(doc.getText(0, doc.getLength()));
-		sb.insert(offset, string);
+		sb.insert(offset, s);
 
 		if (test(sb.toString())) {
-			super.insertString(fb, offset, string, attr);
+			super.insertString(fb, offset, s, set);
 		}
 	}
 
@@ -28,15 +28,14 @@ public class PortNumberFilter extends DocumentFilter {
 	}
 
 	@Override
-	public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-
+	public void replace(FilterBypass fb, int offset, int l, String s, AttributeSet set) throws BadLocationException {
 		Document doc = fb.getDocument();
 		StringBuilder sb = new StringBuilder();
 		sb.append(doc.getText(0, doc.getLength()));
-		sb.replace(offset, offset + length, text);
+		sb.replace(offset, offset + l, s);
 
 		if (test(sb.toString())) {
-			super.replace(fb, offset, length, text, attrs);
+			super.replace(fb, offset, l, s, set);
 		}
 	}
 
