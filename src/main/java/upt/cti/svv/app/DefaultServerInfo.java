@@ -53,6 +53,11 @@ public class DefaultServerInfo implements ServerInfo {
 	}
 
 	@Override
+	public void setPort(int newPort) {
+		this.port = newPort;
+	}
+
+	@Override
 	public int getPort() {
 		return port;
 	}

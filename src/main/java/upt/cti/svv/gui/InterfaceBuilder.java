@@ -137,7 +137,7 @@ public final class InterfaceBuilder {
 		portEntry.add(portLabel);
 		portEntry.add(Box.createHorizontalGlue());
 
-		JFormattedTextField portField = new JFormattedTextField(NumberFormat.getCurrencyInstance());
+		JTextField portField = new JTextField();
 		ComponentMap.put(ComponentMap.Identifier.PORT_FIELD, portField);
 		portEntry.add(portField);
 		return portEntry;

@@ -2,12 +2,10 @@ package upt.cti.svv.gui;
 
 import upt.cti.svv.app.ApplicationStatus;
 import upt.cti.svv.app.ServerInfo;
-import upt.cti.svv.gui.listener.MaintenanceCheckboxListener;
-import upt.cti.svv.gui.listener.MaintenanceDirectoryListener;
-import upt.cti.svv.gui.listener.PowerButtonListener;
-import upt.cti.svv.gui.listener.WebRootDirectoryListener;
+import upt.cti.svv.gui.listener.*;
 
 import javax.swing.*;
+import javax.swing.text.PlainDocument;
 
 public class DefaultSvvitchInterface implements SvvitchInterface {
 	private static final String APPLICATION_NAME = "Svvitch";
@@ -47,22 +45,30 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		((JCheckBox) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_CHECKBOX))
 				.addActionListener(new MaintenanceCheckboxListener(this, info));
 
+		setUpPortRelated(info);
 		setUpWebRootRelated(info);
 		setUpMaintenanceRelated(info);
 	}
 
+	private void setUpPortRelated(ServerInfo info) {
+		final JTextField portField = (JTextField) ComponentMap.get(ComponentMap.Identifier.PORT_FIELD);
+		portField.setText(info.getPortForGui());
+		portField.getDocument().addDocumentListener(new PortListener(info, portField));
+		((PlainDocument) portField.getDocument()).setDocumentFilter(new PortNumberFilter());
+	}
+
 	private void setUpMaintenanceRelated(ServerInfo info) {
-		JLabel selected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR));
+		final JLabel selected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR));
 		selected.setText(info.getMaintenanceDirForGui());
-		JLabel valid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR_VALID));
+		final JLabel valid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR_VALID));
 		((JButton) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR_BUTTON))
 				.addActionListener(new MaintenanceDirectoryListener(selected, valid, info));
 	}
 
 	private void setUpWebRootRelated(ServerInfo info) {
-		JLabel selected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR));
+		final JLabel selected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR));
 		selected.setText(info.getWebRootDirForGui());
-		JLabel valid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_VALID));
+		final JLabel valid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_VALID));
 		((JButton) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_BUTTON))
 				.addActionListener(new WebRootDirectoryListener(selected, valid, info));
 	}
@@ -113,7 +119,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 
 	private void updateConfigurationPort(boolean on) {
 		JTextField textField = (JTextField) ComponentMap.get(ComponentMap.Identifier.PORT_FIELD);
-		textField.setEnabled(on);
+		textField.setEditable(on);
 	}
 
 	private void updateServerInfoPort(String text) {

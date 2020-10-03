@@ -11,6 +11,8 @@ public interface ServerInfo {
 
 	ApplicationStatus getStatus();
 
+	void setPort(int newPort);
+
 	int getPort();
 
 	String getAddress();
