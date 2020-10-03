@@ -1,7 +1,6 @@
 package upt.cti.svv.gui;
 
 import upt.cti.svv.app.ApplicationStatus;
-import upt.cti.svv.app.DefaultServerInfo;
 import upt.cti.svv.app.ServerInfo;
 import upt.cti.svv.gui.listener.MaintenanceCheckboxListener;
 import upt.cti.svv.gui.listener.MaintenanceDirectoryListener;
@@ -14,12 +13,13 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 	private static final String APPLICATION_NAME = "Svvitch";
 	private final JFrame frame;
 
-	public DefaultSvvitchInterface(DefaultServerInfo info) {
+	public DefaultSvvitchInterface(ServerInfo info) {
 		this.frame = InterfaceBuilder.newInterface();
 		setUpListeners(info);
 		updateToStopped();
 	}
 
+	@Override
 	public void display() {
 		this.frame.setVisible(true);
 	}

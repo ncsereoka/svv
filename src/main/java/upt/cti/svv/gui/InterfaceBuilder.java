@@ -17,7 +17,7 @@ public final class InterfaceBuilder {
 
 	private static JPanel mainPanel() {
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.setLayout(new GridLayout(2, 1));
 		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		mainPanel.add(upperPanel());
 		mainPanel.add(lowerPanel());
@@ -26,7 +26,7 @@ public final class InterfaceBuilder {
 
 	private static JPanel upperPanel() {
 		JPanel upperPanel = new JPanel();
-		upperPanel.setLayout(new BoxLayout(upperPanel, BoxLayout.X_AXIS));
+		upperPanel.setLayout(new GridLayout(1, 2));
 		upperPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		upperPanel.add(infoPanel());
 		upperPanel.add(controlPanel());
@@ -36,7 +36,7 @@ public final class InterfaceBuilder {
 	private static JPanel controlPanel() {
 		JPanel controlPanel = new JPanel();
 		controlPanel.setBorder(BorderFactory.createTitledBorder("WebServer control"));
-		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+		controlPanel.setLayout(new GridLayout(2, 1));
 		controlPanel.add(controlPanelButton());
 		controlPanel.add(controlPanelCheckBox());
 		return controlPanel;
@@ -67,7 +67,7 @@ public final class InterfaceBuilder {
 	private static JPanel configurationPanel() {
 		JPanel configurationPanel = new JPanel();
 		configurationPanel.setBorder(BorderFactory.createTitledBorder("WebServer configuration"));
-		configurationPanel.setLayout(new BoxLayout(configurationPanel, BoxLayout.Y_AXIS));
+		configurationPanel.setLayout(new GridLayout(3, 1));
 		configurationPanel.add(configurationPanelPortSection());
 		configurationPanel.add(configurationPanelWebRootSection());
 		configurationPanel.add(configurationPanelMaintenanceSection());
@@ -76,8 +76,10 @@ public final class InterfaceBuilder {
 
 	private static JPanel configurationPanelMaintenanceSection() {
 		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
 		panel.add(new JLabel("Maintenance directory"));
+		panel.add(Box.createHorizontalGlue());
 
 		JLabel selectedLabel = new JLabel("selected");
 		selectedLabel.setBorder(BorderFactory.createEtchedBorder());
@@ -102,8 +104,10 @@ public final class InterfaceBuilder {
 
 	private static JPanel configurationPanelWebRootSection() {
 		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
 		panel.add(new JLabel("Web root directory"));
+		panel.add(Box.createHorizontalGlue());
 
 		JLabel selectedLabel = new JLabel("selected");
 		selectedLabel.setBorder(BorderFactory.createEtchedBorder());
@@ -142,7 +146,7 @@ public final class InterfaceBuilder {
 	private static JPanel infoPanel() {
 		JPanel infoPanel = new JPanel();
 		infoPanel.setBorder(BorderFactory.createTitledBorder("WebServer info"));
-		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+		infoPanel.setLayout(new GridLayout(3, 1));
 		infoPanel.add(infoPanelEntry("Server status:", ComponentMap.Identifier.SERVER_STATUS));
 		infoPanel.add(infoPanelEntry("Server address:", ComponentMap.Identifier.SERVER_ADDRESS));
 		infoPanel.add(infoPanelEntry("Server port:", ComponentMap.Identifier.SERVER_PORT));
