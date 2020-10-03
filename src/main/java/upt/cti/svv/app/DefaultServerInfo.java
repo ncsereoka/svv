@@ -1,17 +1,23 @@
 package upt.cti.svv.app;
 
+import java.io.File;
+
 public class DefaultServerInfo implements ServerInfo {
 	private ApplicationStatus status;
 	private final String address;
 	private int port;
+	private File webRootDir;
+	private File maintenanceDir;
 
 	/**
 	 * Use default server settings
 	 */
 	public DefaultServerInfo(boolean silent) {
 		this.status = silent ? ApplicationStatus.RUNNING : ApplicationStatus.STOPPED;
-		this.address = Configuration.getDefaultAddress();
+		this.address = Configuration.defaultAddress();
 		this.port = Configuration.defaultPort();
+		this.webRootDir = Configuration.defaultWebRootDir();
+		this.maintenanceDir = Configuration.defaultMaintenanceDir();
 	}
 
 	@Override
@@ -36,19 +42,6 @@ public class DefaultServerInfo implements ServerInfo {
 		return status;
 	}
 
-	public String getStatusForGui() {
-		switch (status) {
-			case RUNNING:
-				return "running...";
-			case STOPPED:
-				return "not running";
-			case MAINTENANCE:
-				return "running";
-			default:
-				return "";
-		}
-	}
-
 	@Override
 	public String getAddress() {
 		return address;
@@ -62,5 +55,15 @@ public class DefaultServerInfo implements ServerInfo {
 	@Override
 	public int getPort() {
 		return port;
+	}
+
+	@Override
+	public void setWebRootDir(File selectedDir) {
+		this.webRootDir = selectedDir;
+	}
+
+	@Override
+	public void setMaintenanceDir(File selectedDir) {
+		this.maintenanceDir = selectedDir;
 	}
 }

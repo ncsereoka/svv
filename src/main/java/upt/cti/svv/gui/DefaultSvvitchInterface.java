@@ -4,7 +4,9 @@ import upt.cti.svv.app.ApplicationStatus;
 import upt.cti.svv.app.DefaultServerInfo;
 import upt.cti.svv.app.ServerInfo;
 import upt.cti.svv.gui.listener.MaintenanceCheckboxListener;
+import upt.cti.svv.gui.listener.MaintenanceDirectoryListener;
 import upt.cti.svv.gui.listener.PowerButtonListener;
+import upt.cti.svv.gui.listener.WebRootDirectoryListener;
 
 import javax.swing.*;
 
@@ -14,12 +16,8 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 
 	public DefaultSvvitchInterface(DefaultServerInfo info) {
 		this.frame = InterfaceBuilder.newInterface();
+		setUpListeners(info);
 		updateToStopped();
-
-		((JButton) ComponentMap.get(ComponentMap.Identifier.POWER_BUTTON))
-				.addActionListener(new PowerButtonListener(this, info));
-		((JCheckBox) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_CHECKBOX))
-				.addActionListener(new MaintenanceCheckboxListener(this, info));
 	}
 
 	public void display() {
@@ -41,6 +39,23 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 			default:
 				break;
 		}
+	}
+
+	private void setUpListeners(DefaultServerInfo info) {
+		((JButton) ComponentMap.get(ComponentMap.Identifier.POWER_BUTTON))
+				.addActionListener(new PowerButtonListener(this, info));
+		((JCheckBox) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_CHECKBOX))
+				.addActionListener(new MaintenanceCheckboxListener(this, info));
+
+		JLabel webRootSelected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR));
+		JLabel webRootValid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_VALID));
+		((JButton) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_BUTTON))
+				.addActionListener(new WebRootDirectoryListener(webRootSelected, webRootValid, info));
+
+		JLabel maintenanceSelected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR));
+		JLabel maintenanceValid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR_VALID));
+		((JButton) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR_BUTTON))
+				.addActionListener(new MaintenanceDirectoryListener(maintenanceSelected, maintenanceValid, info));
 	}
 
 	private void updateToStopped() {

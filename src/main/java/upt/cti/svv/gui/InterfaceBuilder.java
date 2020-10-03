@@ -1,8 +1,5 @@
 package upt.cti.svv.gui;
 
-import upt.cti.svv.gui.listener.MaintenanceCheckboxListener;
-import upt.cti.svv.gui.listener.PowerButtonListener;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -89,14 +86,14 @@ public final class InterfaceBuilder {
 
 		panel.add(Box.createHorizontalGlue());
 
-		JFileChooser maintenanceFileChooser = new JFileChooser();
+		JLabel validLabel = new JLabel("valid");
+
 		JButton chooserButton = new JButton(",,,");
 		ComponentMap.put(ComponentMap.Identifier.MAINTENANCE_DIR_BUTTON, chooserButton);
 		panel.add(chooserButton);
 
 		panel.add(Box.createHorizontalGlue());
 
-		JLabel validLabel = new JLabel("valid");
 		ComponentMap.put(ComponentMap.Identifier.MAINTENANCE_DIR_VALID, validLabel);
 		panel.add(validLabel);
 
@@ -115,14 +112,14 @@ public final class InterfaceBuilder {
 
 		panel.add(Box.createHorizontalGlue());
 
-		JFileChooser webRootFileChooser = new JFileChooser();
+		JLabel validLabel = new JLabel("valid");
+
 		JButton chooserButton = new JButton(",,,");
 		ComponentMap.put(ComponentMap.Identifier.WEBROOT_DIR_BUTTON, chooserButton);
 		panel.add(chooserButton);
 
 		panel.add(Box.createHorizontalGlue());
 
-		JLabel validLabel = new JLabel("valid");
 		ComponentMap.put(ComponentMap.Identifier.WEBROOT_DIR_VALID, validLabel);
 		panel.add(validLabel);
 
