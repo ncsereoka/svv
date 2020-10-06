@@ -2,15 +2,18 @@ package upt.cti.svv.app;
 
 import upt.cti.svv.gui.DefaultSvvitchInterface;
 import upt.cti.svv.gui.SvvitchInterface;
-import upt.cti.svv.http.HttpWebServer;
+import upt.cti.svv.server.ServerStatus;
+import upt.cti.svv.server.DefaultServerSettings;
+import upt.cti.svv.server.HttpWebServer;
+import upt.cti.svv.server.ServerSettings;
 
 import java.util.Optional;
 
 /**
- * Main application class - contains the server configuration (or info), the GUI and the server itself
+ * Main application class - contains the server configuration (or settings), the GUI and the server itself
  */
 public final class Svvitch {
-	private final ServerInfo info;
+	private final ServerSettings settings;
 	private final SvvitchInterface gui;
 	private final HttpWebServer server;
 
@@ -20,19 +23,19 @@ public final class Svvitch {
 	 * @param silently run silently (i.e. without GUI)
 	 */
 	public Svvitch(boolean silently) {
-		this(silently, new DefaultServerInfo(silently));
+		this(silently, new DefaultServerSettings(silently));
 	}
 
-	public Svvitch(boolean silently, ServerInfo info) {
-		this(silently, info, new HttpWebServer(info));
+	public Svvitch(boolean silently, ServerSettings settings) {
+		this(silently, settings, new HttpWebServer(settings));
 	}
 
-	public Svvitch(boolean silently, ServerInfo info, HttpWebServer server) {
-		this(info, silently ? null : new DefaultSvvitchInterface(server), server);
+	public Svvitch(boolean silently, ServerSettings settings, HttpWebServer server) {
+		this(settings, silently ? null : new DefaultSvvitchInterface(server), server);
 	}
 
-	public Svvitch(ServerInfo info, SvvitchInterface ui, HttpWebServer server) {
-		this.info = info;
+	public Svvitch(ServerSettings settings, SvvitchInterface ui, HttpWebServer server) {
+		this.settings = settings;
 		this.gui = ui;
 		this.server = server;
 	}
@@ -44,13 +47,13 @@ public final class Svvitch {
 	public void start() {
 		Optional.ofNullable(gui)
 				.ifPresent(SvvitchInterface::display);
-		if (this.info.getStatus().equals(ApplicationStatus.RUNNING)) {
+		if (this.settings.getStatus().equals(ServerStatus.RUNNING)) {
 			this.server.start();
 		}
 	}
 
-	public ServerInfo getInfo() {
-		return info;
+	public ServerSettings getSettings() {
+		return settings;
 	}
 
 	public SvvitchInterface getGui() {

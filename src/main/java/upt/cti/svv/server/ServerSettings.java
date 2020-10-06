@@ -1,15 +1,15 @@
-package upt.cti.svv.app;
+package upt.cti.svv.server;
 
 import java.io.File;
 
-public interface ServerInfo {
+public interface ServerSettings {
 	void updateToStopped();
 
 	void updateToMaintenance(int port);
 
 	void updateToRunning(int port);
 
-	ApplicationStatus getStatus();
+	ServerStatus getStatus();
 
 	void setPort(int newPort);
 

@@ -1,4 +1,4 @@
-package upt.cti.svv.http;
+package upt.cti.svv.server;
 
 enum HttpMethod {
 	GET,

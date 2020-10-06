@@ -1,9 +1,9 @@
 package upt.cti.svv.gui;
 
-import upt.cti.svv.app.ServerInfo;
+import upt.cti.svv.server.ServerSettings;
 
 public interface SvvitchInterface {
-	void update(ServerInfo info);
+	void update(ServerSettings settings);
 
 	void display();
 }

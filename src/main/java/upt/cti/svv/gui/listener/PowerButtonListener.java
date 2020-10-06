@@ -1,7 +1,7 @@
 package upt.cti.svv.gui.listener;
 
-import upt.cti.svv.app.ApplicationStatus;
-import upt.cti.svv.app.ServerInfo;
+import upt.cti.svv.server.ServerStatus;
+import upt.cti.svv.server.ServerSettings;
 import upt.cti.svv.gui.SvvitchInterface;
 
 import java.awt.event.ActionEvent;
@@ -9,20 +9,20 @@ import java.awt.event.ActionListener;
 
 public class PowerButtonListener implements ActionListener {
 	private final SvvitchInterface gui;
-	private final ServerInfo info;
+	private final ServerSettings settings;
 
-	public PowerButtonListener(SvvitchInterface gui, ServerInfo info) {
+	public PowerButtonListener(SvvitchInterface gui, ServerSettings settings) {
 		this.gui = gui;
-		this.info = info;
+		this.settings = settings;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
-		if (info.getStatus().equals(ApplicationStatus.STOPPED)) {
-			info.updateToRunning(info.getPort());
+		if (settings.getStatus().equals(ServerStatus.STOPPED)) {
+			settings.updateToRunning(settings.getPort());
 		} else {
-			info.updateToStopped();
+			settings.updateToStopped();
 		}
-		gui.update(info);
+		gui.update(settings);
 	}
 }

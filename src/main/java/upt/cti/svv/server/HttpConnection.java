@@ -1,7 +1,8 @@
-package upt.cti.svv.http;
+package upt.cti.svv.server;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import upt.cti.svv.server.exception.InternalServerErrorException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class HttpConnection implements Runnable {
 			in.close();
 			clientSocket.close();
 		} catch (IOException e) {
-			throw new ServerErrorException("Error during server connection");
+			throw new InternalServerErrorException("Error during server connection");
 		}
 	}
 }

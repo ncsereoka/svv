@@ -1,6 +1,6 @@
 package upt.cti.svv.gui.listener;
 
-import upt.cti.svv.app.ServerInfo;
+import upt.cti.svv.server.ServerSettings;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,12 +10,12 @@ import java.io.File;
 public class WebRootDirectoryListener implements ActionListener, ValidDirectoryChooser {
 	private final JLabel folderLabel;
 	private final JLabel validLabel;
-	private final ServerInfo info;
+	private final ServerSettings settings;
 
-	public WebRootDirectoryListener(JLabel folderLabel, JLabel validLabel, ServerInfo info) {
+	public WebRootDirectoryListener(JLabel folderLabel, JLabel validLabel, ServerSettings settings) {
 		this.folderLabel = folderLabel;
 		this.validLabel = validLabel;
-		this.info = info;
+		this.settings = settings;
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class WebRootDirectoryListener implements ActionListener, ValidDirectoryC
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			final File selectedFile = fileChooser.getSelectedFile();
 			folderLabel.setText(selectedFile.getAbsolutePath());
-			info.setWebRootDir(selectedFile);
+			settings.setWebRootDir(selectedFile);
 		}
 		validLabel.setText(validityString());
 	}

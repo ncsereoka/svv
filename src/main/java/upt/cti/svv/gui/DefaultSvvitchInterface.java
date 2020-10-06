@@ -1,9 +1,9 @@
 package upt.cti.svv.gui;
 
-import upt.cti.svv.app.ApplicationStatus;
-import upt.cti.svv.app.ServerInfo;
+import upt.cti.svv.server.ServerStatus;
+import upt.cti.svv.server.ServerSettings;
 import upt.cti.svv.gui.listener.*;
-import upt.cti.svv.http.HttpWebServer;
+import upt.cti.svv.server.HttpWebServer;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
@@ -16,7 +16,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 	public DefaultSvvitchInterface(HttpWebServer server) {
 		this.server = server;
 		this.frame = InterfaceBuilder.newInterface();
-		setUpListeners(server.getInfo());
+		setUpListeners(server.getSettings());
 		updateToStopped();
 	}
 
@@ -26,13 +26,13 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 	}
 
 	@Override
-	public void update(ServerInfo info) {
-		switch (info.getStatus()) {
+	public void update(ServerSettings settings) {
+		switch (settings.getStatus()) {
 			case RUNNING:
-				updateToRunning(info);
+				updateToRunning(settings);
 				break;
 			case MAINTENANCE:
-				updateToMaintenance(info);
+				updateToMaintenance(settings);
 				break;
 			case STOPPED:
 				updateToStopped();
@@ -42,42 +42,42 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		}
 	}
 
-	private void setUpListeners(ServerInfo info) {
+	private void setUpListeners(ServerSettings settings) {
 		((JButton) ComponentMap.get(ComponentMap.Identifier.POWER_BUTTON))
-				.addActionListener(new PowerButtonListener(this, info));
+				.addActionListener(new PowerButtonListener(this, settings));
 		((JCheckBox) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_CHECKBOX))
-				.addActionListener(new MaintenanceCheckboxListener(this, info));
+				.addActionListener(new MaintenanceCheckboxListener(this, settings));
 
-		setUpPortRelated(info);
-		setUpWebRootRelated(info);
-		setUpMaintenanceRelated(info);
+		setUpPortRelated(settings);
+		setUpWebRootRelated(settings);
+		setUpMaintenanceRelated(settings);
 	}
 
-	private void setUpPortRelated(ServerInfo info) {
+	private void setUpPortRelated(ServerSettings settings) {
 		final JTextField portField = (JTextField) ComponentMap.get(ComponentMap.Identifier.PORT_FIELD);
-		portField.setText(info.getPortForGui());
-		portField.getDocument().addDocumentListener(new PortListener(info, portField));
+		portField.setText(settings.getPortForGui());
+		portField.getDocument().addDocumentListener(new PortListener(settings, portField));
 		((PlainDocument) portField.getDocument()).setDocumentFilter(new PortNumberFilter());
 	}
 
-	private void setUpMaintenanceRelated(ServerInfo info) {
+	private void setUpMaintenanceRelated(ServerSettings settings) {
 		final JLabel selected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR));
-		selected.setText(info.getMaintenanceDirForGui());
+		selected.setText(settings.getMaintenanceDirForGui());
 		final JLabel valid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR_VALID));
 		((JButton) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR_BUTTON))
-				.addActionListener(new MaintenanceDirectoryListener(selected, valid, info));
+				.addActionListener(new MaintenanceDirectoryListener(selected, valid, settings));
 	}
 
-	private void setUpWebRootRelated(ServerInfo info) {
+	private void setUpWebRootRelated(ServerSettings settings) {
 		final JLabel selected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR));
-		selected.setText(info.getWebRootDirForGui());
+		selected.setText(settings.getWebRootDirForGui());
 		final JLabel valid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_VALID));
 		((JButton) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_BUTTON))
-				.addActionListener(new WebRootDirectoryListener(selected, valid, info));
+				.addActionListener(new WebRootDirectoryListener(selected, valid, settings));
 	}
 
 	private void updateToStopped() {
-		updateFrameTitle(ApplicationStatus.STOPPED);
+		updateFrameTitle(ServerStatus.STOPPED);
 		updatePowerButtonText("Start server");
 		updateMaintenanceCheckbox(false);
 		updateServerInfoStatus("not running");
@@ -89,23 +89,23 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		this.server.stop();
 	}
 
-	private void updateToMaintenance(ServerInfo info) {
-		updateFrameTitle(ApplicationStatus.MAINTENANCE);
+	private void updateToMaintenance(ServerSettings settings) {
+		updateFrameTitle(ServerStatus.MAINTENANCE);
 		updateServerInfoStatus("maintenance");
-		updateServerInfoAddress(info.getAddress());
-		updateServerInfoPort(info.getPortForGui());
+		updateServerInfoAddress(settings.getAddress());
+		updateServerInfoPort(settings.getPortForGui());
 		updateConfigurationPort(false);
 		updateConfigurationWeb(true);
 		updateConfigurationMaintenance(false);
 	}
 
-	private void updateToRunning(ServerInfo info) {
-		updateFrameTitle(ApplicationStatus.RUNNING);
+	private void updateToRunning(ServerSettings settings) {
+		updateFrameTitle(ServerStatus.RUNNING);
 		updatePowerButtonText("Stop server");
 		updateMaintenanceCheckbox(true);
 		updateServerInfoStatus("running");
-		updateServerInfoAddress(info.getAddress());
-		updateServerInfoPort(info.getPortForGui());
+		updateServerInfoAddress(settings.getAddress());
+		updateServerInfoPort(settings.getPortForGui());
 		updateConfigurationPort(false);
 		updateConfigurationWeb(false);
 		updateConfigurationMaintenance(true);
@@ -150,8 +150,8 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		}
 	}
 
-	private void updateFrameTitle(ApplicationStatus state) {
-		final String title = String.format("%s - [%s]", APPLICATION_NAME, state.name());
+	private void updateFrameTitle(ServerStatus status) {
+		final String title = String.format("%s - [%s]", APPLICATION_NAME, status.name());
 		this.frame.setTitle(title);
 	}
 

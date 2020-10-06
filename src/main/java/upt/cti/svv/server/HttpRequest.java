@@ -1,5 +1,7 @@
-package upt.cti.svv.http;
+package upt.cti.svv.server;
 
+import upt.cti.svv.server.exception.InternalServerErrorException;
+import upt.cti.svv.server.exception.InvalidRequestException;
 import upt.cti.svv.util.ImmutablePair;
 
 import java.io.BufferedReader;
@@ -107,7 +109,7 @@ public class HttpRequest {
 			return new HttpRequestFirstLine(method, url, version);
 
 		} catch (IOException e) {
-			throw new ServerErrorException("Error reading request line.");
+			throw new InternalServerErrorException("Error reading request line.");
 		}
 	}
 
@@ -123,7 +125,7 @@ public class HttpRequest {
 		try {
 			return new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (IOException e) {
-			throw new ServerErrorException("Error creating socket reader.");
+			throw new InternalServerErrorException("Error creating socket reader.");
 		}
 	}
 

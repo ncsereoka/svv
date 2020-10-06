@@ -1,6 +1,6 @@
 package upt.cti.svv.util;
 
-import upt.cti.svv.http.ServerErrorException;
+import upt.cti.svv.server.exception.InternalServerErrorException;
 
 import java.io.Closeable;
 
@@ -9,7 +9,7 @@ public final class ExceptionWrapper {
 		try {
 			closeable.close();
 		} catch (Exception e) {
-			throw new ServerErrorException(messageOnError);
+			throw new InternalServerErrorException(messageOnError);
 		}
 	}
 

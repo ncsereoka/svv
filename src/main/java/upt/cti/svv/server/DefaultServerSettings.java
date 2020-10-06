@@ -1,9 +1,11 @@
-package upt.cti.svv.app;
+package upt.cti.svv.server;
+
+import upt.cti.svv.app.Configuration;
 
 import java.io.File;
 
-public class DefaultServerInfo implements ServerInfo {
-	private ApplicationStatus status;
+public class DefaultServerSettings implements ServerSettings {
+	private ServerStatus status;
 	private final String address;
 	private int port;
 	private File webRootDir;
@@ -12,8 +14,8 @@ public class DefaultServerInfo implements ServerInfo {
 	/**
 	 * Use default server settings
 	 */
-	public DefaultServerInfo(boolean silent) {
-		this.status = silent ? ApplicationStatus.RUNNING : ApplicationStatus.STOPPED;
+	public DefaultServerSettings(boolean silent) {
+		this.status = silent ? ServerStatus.RUNNING : ServerStatus.STOPPED;
 		this.address = Configuration.defaultAddress();
 		this.port = Configuration.defaultPort();
 		this.webRootDir = Configuration.defaultWebRootDir();
@@ -22,23 +24,23 @@ public class DefaultServerInfo implements ServerInfo {
 
 	@Override
 	public void updateToStopped() {
-		this.status = ApplicationStatus.STOPPED;
+		this.status = ServerStatus.STOPPED;
 	}
 
 	@Override
 	public void updateToMaintenance(int port) {
-		this.status = ApplicationStatus.MAINTENANCE;
+		this.status = ServerStatus.MAINTENANCE;
 		this.port = port;
 	}
 
 	@Override
 	public void updateToRunning(int port) {
-		this.status = ApplicationStatus.RUNNING;
+		this.status = ServerStatus.RUNNING;
 		this.port = port;
 	}
 
 	@Override
-	public ApplicationStatus getStatus() {
+	public ServerStatus getStatus() {
 		return status;
 	}
 

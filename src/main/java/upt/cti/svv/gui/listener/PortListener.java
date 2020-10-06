@@ -1,17 +1,17 @@
 package upt.cti.svv.gui.listener;
 
-import upt.cti.svv.app.ServerInfo;
+import upt.cti.svv.server.ServerSettings;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class PortListener implements DocumentListener {
-	private final ServerInfo info;
+	private final ServerSettings settings;
 	private final JTextField field;
 
-	public PortListener(ServerInfo info, JTextField field) {
-		this.info = info;
+	public PortListener(ServerSettings settings, JTextField field) {
+		this.settings = settings;
 		this.field = field;
 	}
 
@@ -32,7 +32,7 @@ public class PortListener implements DocumentListener {
 
 	private void change() {
 		int number = getValidPort();
-		info.setPort(number);
+		settings.setPort(number);
 	}
 
 	private int getValidPort() {
