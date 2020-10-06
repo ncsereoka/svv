@@ -3,6 +3,7 @@ package upt.cti.svv.gui;
 import upt.cti.svv.app.ApplicationStatus;
 import upt.cti.svv.app.ServerInfo;
 import upt.cti.svv.gui.listener.*;
+import upt.cti.svv.http.HttpWebServer;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
@@ -10,10 +11,12 @@ import javax.swing.text.PlainDocument;
 public class DefaultSvvitchInterface implements SvvitchInterface {
 	private static final String APPLICATION_NAME = "Svvitch";
 	private final JFrame frame;
+	private final HttpWebServer server;
 
-	public DefaultSvvitchInterface(ServerInfo info) {
+	public DefaultSvvitchInterface(HttpWebServer server) {
+		this.server = server;
 		this.frame = InterfaceBuilder.newInterface();
-		setUpListeners(info);
+		setUpListeners(server.getInfo());
 		updateToStopped();
 	}
 
@@ -83,6 +86,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		updateConfigurationPort(true);
 		updateConfigurationWeb(true);
 		updateConfigurationMaintenance(true);
+		this.server.stop();
 	}
 
 	private void updateToMaintenance(ServerInfo info) {
@@ -105,6 +109,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		updateConfigurationPort(false);
 		updateConfigurationWeb(false);
 		updateConfigurationMaintenance(true);
+		this.server.start();
 	}
 
 	private void updateConfigurationMaintenance(boolean on) {

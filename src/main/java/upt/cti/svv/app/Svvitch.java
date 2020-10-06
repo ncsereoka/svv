@@ -24,13 +24,17 @@ public final class Svvitch {
 	}
 
 	public Svvitch(boolean silently, ServerInfo info) {
-		this(info, silently ? null : new DefaultSvvitchInterface(info));
+		this(silently, info, new HttpWebServer(info));
 	}
 
-	public Svvitch(ServerInfo info, SvvitchInterface ui) {
+	public Svvitch(boolean silently, ServerInfo info, HttpWebServer server) {
+		this(info, silently ? null : new DefaultSvvitchInterface(server), server);
+	}
+
+	public Svvitch(ServerInfo info, SvvitchInterface ui, HttpWebServer server) {
 		this.info = info;
 		this.gui = ui;
-		this.server = new HttpWebServer();
+		this.server = server;
 	}
 
 	public static void main(String[] args) {
@@ -38,9 +42,11 @@ public final class Svvitch {
 	}
 
 	public void start() {
-		Optional
-				.ofNullable(gui)
+		Optional.ofNullable(gui)
 				.ifPresent(SvvitchInterface::display);
+		if (this.info.getStatus().equals(ApplicationStatus.RUNNING)) {
+			this.server.start();
+		}
 	}
 
 	public ServerInfo getInfo() {
