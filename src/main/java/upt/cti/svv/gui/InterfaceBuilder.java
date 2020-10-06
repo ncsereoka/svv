@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * Utility class to separate UI building from everything else
+ */
 public final class InterfaceBuilder {
 	public static JFrame newInterface() {
 		JFrame frame = new JFrame();

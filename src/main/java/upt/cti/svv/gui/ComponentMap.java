@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Utility class to hold 'interesting' UI components - these will need to be looked up
+ */
 public final class ComponentMap {
 	private static final Map<Identifier, JComponent> map = new HashMap<>();
 

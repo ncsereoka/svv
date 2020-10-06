@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Extracted as Runnable so it doesn't block the GUI when being connected to the listeners
+ */
 public class HttpConnectionHandler implements Runnable {
 	private static final Logger log = LoggerFactory.getLogger(HttpConnectionHandler.class);
 
