@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 public final class Configuration {
-	private static final String CONFIG_FILE = "application.properties";
+	private static final String CONFIG_FILE = "config.properties";
 
 	private static final boolean silent;
 	private static final int port;
