@@ -9,6 +9,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The request message consists of the following:
+ * - a request line (e.g., GET /images/logo.png HTTP/1.1, which requests a resource called /images/logo.png from the server)
+ * - request header fields (e.g., Accept-Language: en)
+ * - an empty line
+ * - an optional message body
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Message_format">Wikipedia</a>
+ */
 public final class HttpRequestParser {
 	/**
 	 * Parse input from a reader object to (hopefully) obtain an HttpRequest
@@ -17,11 +26,11 @@ public final class HttpRequestParser {
 	 * @return a new HttpRequest
 	 */
 	public static HttpRequest from(BufferedReader reader) {
-		final HttpRequestFirstLine firstLine = parseFirstLineElements(reader);
+		final HttpRequestLine requestLine = parseRequestLineElements(reader);
 		return new HttpRequest(
-				firstLine.method,
-				firstLine.url,
-				firstLine.httpVersion,
+				requestLine.method,
+				requestLine.url,
+				requestLine.httpVersion,
 				parseHeaders(reader)
 		);
 	}
@@ -34,7 +43,6 @@ public final class HttpRequestParser {
 				ImmutablePair<String, String> header = parseHeader(requestLine);
 				map.put(header.getKey(), header.getValue());
 			}
-
 			return map;
 		} catch (IOException e) {
 			throw new InvalidRequestException("Error reading request headers");
@@ -60,7 +68,7 @@ public final class HttpRequestParser {
 		return ImmutablePair.of(key, value);
 	}
 
-	private static HttpRequestFirstLine parseFirstLineElements(BufferedReader reader) {
+	private static HttpRequestLine parseRequestLineElements(BufferedReader reader) {
 		try {
 			final String[] lineElements = reader.readLine().split(" ");
 			if (lineElements.length != 3) {
@@ -71,7 +79,7 @@ public final class HttpRequestParser {
 			final String url = lineElements[1];
 			final String version = lineElements[2];
 
-			return new HttpRequestFirstLine(method, url, version);
+			return new HttpRequestLine(method, url, version);
 
 		} catch (IOException e) {
 			throw new InternalServerErrorException("Error reading request line.");
@@ -86,12 +94,12 @@ public final class HttpRequestParser {
 		}
 	}
 
-	private static class HttpRequestFirstLine {
+	private static class HttpRequestLine {
 		private final HttpMethod method;
 		private final String url;
 		private final String httpVersion;
 
-		private HttpRequestFirstLine(HttpMethod method, String url, String httpVersion) {
+		private HttpRequestLine(HttpMethod method, String url, String httpVersion) {
 			this.method = method;
 			this.url = url;
 			this.httpVersion = httpVersion;
