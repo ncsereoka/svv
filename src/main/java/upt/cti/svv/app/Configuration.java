@@ -38,8 +38,8 @@ public final class Configuration {
 		address = "127.0.0.1";
 
 		final File workingDirFile = new File(Paths.get(System.getProperty("user.dir")).toUri());
-		webRoot = getWebRootDir(configWebRoot, workingDirFile);
-		maintenance = getMaintenanceDir(configMaintenance, workingDirFile);
+		webRoot = loadDirectory(configWebRoot, workingDirFile);
+		maintenance = loadDirectory(configMaintenance, workingDirFile);
 	}
 
 	public static boolean runSilently() {
@@ -89,32 +89,17 @@ public final class Configuration {
 		return parsedPort;
 	}
 
-	private static File getWebRootDir(String configWebRoot, File working) {
+	private static File loadDirectory(String folderPath, File workDir) {
 		File tempFile;
 		try {
-			if (configWebRoot == null) {
-				tempFile = working;
+			if (folderPath == null) {
+				tempFile = workDir;
 			} else {
-				Path path = Paths.get(configWebRoot);
+				Path path = Paths.get(folderPath);
 				tempFile = new File(path.toUri());
 			}
 		} catch (Exception e) {
-			tempFile = working;
-		}
-		return tempFile;
-	}
-
-	private static File getMaintenanceDir(String configMaintenance, File working) {
-		File tempFile;
-		try {
-			if (configMaintenance == null) {
-				tempFile = working;
-			} else {
-				Path path = Paths.get(configMaintenance);
-				tempFile = new File(path.toUri());
-			}
-		} catch (Exception e) {
-			tempFile = working;
+			tempFile = workDir;
 		}
 		return tempFile;
 	}
