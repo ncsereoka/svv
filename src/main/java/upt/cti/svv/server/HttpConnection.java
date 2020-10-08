@@ -24,9 +24,9 @@ public class HttpConnection implements Runnable {
 		log.info("New client connection");
 
 		try {
-			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			HttpRequest request = HttpRequest.from(in);
+			final PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+			final BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			final HttpRequest request = HttpRequestParser.from(in);
 
 			out.println(request);
 			out.close();
