@@ -1,12 +1,16 @@
 package upt.cti.svv.app;
 
 import java.io.File;
-import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
 public final class Configuration {
+	private static final String CONFIG_FILE = "application.properties";
+
 	private static final boolean silent;
 	private static final int port;
 	private static final String address;
@@ -19,11 +23,9 @@ public final class Configuration {
 		String configWebRoot = null;
 		String configMaintenance = null;
 
-		try (InputStream in = Svvitch.class.getClassLoader().getResourceAsStream("application.properties");) {
+		try (FileInputStream in = new FileInputStream(CONFIG_FILE)) {
 			Properties prop = new Properties();
-			if (in != null) {
-				prop.load(in);
-			}
+			prop.load(in);
 			configSilent = prop.getProperty("silent");
 			configPort = prop.getProperty("port");
 			configWebRoot = prop.getProperty("webroot");
@@ -31,13 +33,45 @@ public final class Configuration {
 		} catch (Exception ignored) {
 		}
 
-		silent = configSilent != null && !configSilent.isBlank();
+		silent = Boolean.parseBoolean(configSilent);
 		port = getPort(configPort);
 		address = "127.0.0.1";
 
 		final File workingDirFile = new File(Paths.get(System.getProperty("user.dir")).toUri());
 		webRoot = getWebRootDir(configWebRoot, workingDirFile);
 		maintenance = getMaintenanceDir(configMaintenance, workingDirFile);
+	}
+
+	public static boolean runSilently() {
+		return silent;
+	}
+
+	public static int defaultPort() {
+		return port;
+	}
+
+	public static String defaultAddress() {
+		return address;
+	}
+
+	public static File defaultWebRootDir() {
+		return webRoot;
+	}
+
+	public static File defaultMaintenanceDir() {
+		return maintenance;
+	}
+
+	public static void persistProperties() {
+		try (FileOutputStream out = new FileOutputStream(CONFIG_FILE)) {
+			final Properties props = new Properties();
+			props.setProperty("silent", String.valueOf(silent));
+			props.setProperty("port", String.valueOf(port));
+			props.setProperty("webroot", webRoot.getAbsolutePath());
+			props.setProperty("maintenance", maintenance.getAbsolutePath());
+			props.store(out, null);
+		} catch (IOException ignored) {
+		}
 	}
 
 	private static int getPort(String configPort) {
@@ -83,26 +117,6 @@ public final class Configuration {
 			tempFile = working;
 		}
 		return tempFile;
-	}
-
-	public static boolean runSilently() {
-		return silent;
-	}
-
-	public static int defaultPort() {
-		return port;
-	}
-
-	public static String defaultAddress() {
-		return address;
-	}
-
-	public static File defaultWebRootDir() {
-		return webRoot;
-	}
-
-	public static File defaultMaintenanceDir() {
-		return maintenance;
 	}
 
 	private Configuration() {
