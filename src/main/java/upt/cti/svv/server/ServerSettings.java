@@ -1,6 +1,7 @@
 package upt.cti.svv.server;
 
 import java.io.File;
+import java.util.Properties;
 
 /**
  * Abstraction of a server's settings (address, port, state, etc)
@@ -30,4 +31,6 @@ public interface ServerSettings {
 	String getWebRootDirForGui();
 
 	String getMaintenanceDirForGui();
+
+	Properties toProperties();
 }

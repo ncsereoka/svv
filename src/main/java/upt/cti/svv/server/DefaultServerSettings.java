@@ -3,6 +3,7 @@ package upt.cti.svv.server;
 import upt.cti.svv.app.Configuration;
 
 import java.io.File;
+import java.util.Properties;
 
 public class DefaultServerSettings implements ServerSettings {
 	private ServerStatus status;
@@ -10,11 +11,13 @@ public class DefaultServerSettings implements ServerSettings {
 	private int port;
 	private File webRootDir;
 	private File maintenanceDir;
+	private final boolean silent;
 
 	/**
 	 * Use default server settings
 	 */
 	public DefaultServerSettings(boolean silent) {
+		this.silent = silent;
 		this.status = silent ? ServerStatus.RUNNING : ServerStatus.STOPPED;
 		this.address = Configuration.defaultAddress();
 		this.port = Configuration.defaultPort();
@@ -82,5 +85,15 @@ public class DefaultServerSettings implements ServerSettings {
 	@Override
 	public String getMaintenanceDirForGui() {
 		return maintenanceDir.getAbsolutePath();
+	}
+
+	@Override
+	public Properties toProperties() {
+		final Properties props = new Properties();
+		props.setProperty("silent", String.valueOf(silent));
+		props.setProperty("port", String.valueOf(port));
+		props.setProperty("webroot", webRootDir.getAbsolutePath());
+		props.setProperty("maintenance", maintenanceDir.getAbsolutePath());
+		return props;
 	}
 }

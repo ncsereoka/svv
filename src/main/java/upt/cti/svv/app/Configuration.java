@@ -62,14 +62,9 @@ public final class Configuration {
 		return maintenance;
 	}
 
-	public static void persistProperties() {
+	public static void persistConfiguration(Properties properties) {
 		try (FileOutputStream out = new FileOutputStream(CONFIG_FILE)) {
-			final Properties props = new Properties();
-			props.setProperty("silent", String.valueOf(silent));
-			props.setProperty("port", String.valueOf(port));
-			props.setProperty("webroot", webRoot.getAbsolutePath());
-			props.setProperty("maintenance", maintenance.getAbsolutePath());
-			props.store(out, null);
+			properties.store(out, null);
 		} catch (IOException ignored) {
 		}
 	}
