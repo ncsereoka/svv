@@ -30,12 +30,12 @@ public class HttpRequestParserTest {
 	}
 
 	@Test(expected = InvalidRequestException.class)
-	public void invalid_request_line_missing_url() {
+	public void missing_url() {
 		parse("GET HTTP/1.1\n" + VALID_TEST_HEADERS);
 	}
 
 	@Test(expected = InvalidRequestException.class)
-	public void invalid_request_line_invalid_url() {
+	public void invalid_url() {
 		parse("GET home HTTP/1.1\n" + VALID_TEST_HEADERS);
 	}
 
