@@ -14,7 +14,7 @@ public class DefaultServerSettings implements ServerSettings {
 	private final boolean silent;
 
 	/**
-	 * Use default server settings
+	 * Use settings from configuration
 	 */
 	public DefaultServerSettings(boolean silent) {
 		this.silent = silent;
@@ -23,6 +23,25 @@ public class DefaultServerSettings implements ServerSettings {
 		this.port = Configuration.defaultPort();
 		this.webRootDir = Configuration.defaultWebRootDir();
 		this.maintenanceDir = Configuration.defaultMaintenanceDir();
+	}
+
+	/**
+	 * Use custom settings
+	 */
+	public DefaultServerSettings(
+			boolean silent,
+			ServerStatus status,
+			String address,
+			int port,
+			File webRootDir,
+			File maintenanceDir
+	) {
+		this.silent = silent;
+		this.status = status;
+		this.address = address;
+		this.port = port;
+		this.webRootDir = webRootDir;
+		this.maintenanceDir = maintenanceDir;
 	}
 
 	@Override
