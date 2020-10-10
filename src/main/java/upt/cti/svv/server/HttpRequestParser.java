@@ -56,7 +56,7 @@ public final class HttpRequestParser {
 		}
 
 		final String key = lineElements[0].strip();
-		if (key == null || key.equals("")) {
+		if (key == null || key.equals("") || key.contains(" ")) {
 			throw new InvalidRequestException("Empty header");
 		}
 
@@ -76,14 +76,28 @@ public final class HttpRequestParser {
 			}
 
 			final HttpMethod method = parseMethod(lineElements[0]);
-			final String url = lineElements[1];
-			final String version = lineElements[2];
+			final String url = parseUrl(lineElements[1]);
+			final String version = parseVersion(lineElements[2]);
 
 			return new HttpRequestLine(method, url, version);
 
 		} catch (IOException e) {
 			throw new InternalServerErrorException("Error reading request line.");
 		}
+	}
+
+	private static String parseVersion(String version) {
+		if (!version.equals(HttpVersion.HTTP_1_1.getName())) {
+			throw new InvalidRequestException("Invalid HTTP version");
+		}
+		return version;
+	}
+
+	private static String parseUrl(String url) {
+		if (url.charAt(0) != '/') {
+			throw new InvalidRequestException("Invalid request URL");
+		}
+		return url;
 	}
 
 	private static HttpMethod parseMethod(String string) {

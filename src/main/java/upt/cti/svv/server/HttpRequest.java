@@ -34,14 +34,14 @@ public class HttpRequest {
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder()
-				.append("HTTP Request\n")
-				.append("============")
+				.append("HTTP Request")
+				.append("\n============")
 				.append("\nMethod: ").append(this.method.name())
 				.append("\nURL: ").append(this.url)
 				.append("\nHTTP version: ").append(this.httpVersion)
 				.append("\nHeaders:");
 		for (String key : this.headers.keySet()) {
-			builder.append(String.format("\n%s: %s", key, this.headers.get(key)));
+			builder.append(String.format("\n\t%s: %s", key, this.headers.get(key)));
 		}
 
 		return builder.toString();
