@@ -36,4 +36,13 @@ public class ValidatedResultTest {
 				.withCondition(integer -> integer > 6)
 				.onFailThrow(() -> new AssertionError("sad"));
 	}
+
+	@Test
+	public void map_happy_path() {
+		final int result = ValidatedResult.of(5)
+				.withCondition(integer -> integer > 4)
+				.map(integer -> integer + 1)
+				.onFailThrow(() -> new AssertionError(("sad")));
+		Assert.assertEquals(6, result);
+	}
 }

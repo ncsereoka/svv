@@ -12,7 +12,7 @@ public final class PortValidator {
 
 		return ValidatedResult.of(port)
 				.withCondition(PortValidator::isValidPort)
-				.onFailThrow(() -> new ConfigurationException(String.format("Specified port <%d> is invalid", port)));
+				.onFailThrow(() -> new ConfigurationException(String.format("Specified port '%d' is invalid", port)));
 	}
 
 	private static boolean isValidPort(Integer p) {
