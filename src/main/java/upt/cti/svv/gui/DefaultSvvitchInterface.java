@@ -1,7 +1,7 @@
 package upt.cti.svv.gui;
 
 import upt.cti.svv.server.ServerStatus;
-import upt.cti.svv.server.ServerSettings;
+import upt.cti.svv.server.ServerConfiguration;
 import upt.cti.svv.gui.listener.*;
 import upt.cti.svv.server.HttpWebServer;
 
@@ -26,7 +26,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 	}
 
 	@Override
-	public void update(ServerSettings settings) {
+	public void update(ServerConfiguration settings) {
 		switch (settings.getStatus()) {
 			case RUNNING:
 				updateToRunning(settings);
@@ -42,7 +42,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		}
 	}
 
-	private void setUpListeners(ServerSettings settings) {
+	private void setUpListeners(ServerConfiguration settings) {
 		((JButton) ComponentMap.get(ComponentMap.Identifier.POWER_BUTTON))
 				.addActionListener(new PowerButtonListener(this, settings));
 		((JCheckBox) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_CHECKBOX))
@@ -53,14 +53,14 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		setUpMaintenanceRelated(settings);
 	}
 
-	private void setUpPortRelated(ServerSettings settings) {
+	private void setUpPortRelated(ServerConfiguration settings) {
 		final JTextField portField = (JTextField) ComponentMap.get(ComponentMap.Identifier.PORT_FIELD);
 		portField.setText(settings.getPortForGui());
 		portField.getDocument().addDocumentListener(new PortListener(settings, portField));
 		((PlainDocument) portField.getDocument()).setDocumentFilter(new PortNumberFilter());
 	}
 
-	private void setUpMaintenanceRelated(ServerSettings settings) {
+	private void setUpMaintenanceRelated(ServerConfiguration settings) {
 		final JLabel selected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR));
 		selected.setText(settings.getMaintenanceDirForGui());
 		final JLabel valid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_DIR_VALID));
@@ -68,7 +68,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 				.addActionListener(new MaintenanceDirectoryListener(selected, valid, settings));
 	}
 
-	private void setUpWebRootRelated(ServerSettings settings) {
+	private void setUpWebRootRelated(ServerConfiguration settings) {
 		final JLabel selected = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR));
 		selected.setText(settings.getWebRootDirForGui());
 		final JLabel valid = ((JLabel) ComponentMap.get(ComponentMap.Identifier.WEBROOT_DIR_VALID));
@@ -89,22 +89,22 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		this.server.stop();
 	}
 
-	private void updateToMaintenance(ServerSettings settings) {
+	private void updateToMaintenance(ServerConfiguration settings) {
 		updateFrameTitle(ServerStatus.MAINTENANCE);
 		updateServerInfoStatus("maintenance");
-		updateServerInfoAddress(settings.getAddress());
+		updateServerInfoAddress(settings.address());
 		updateServerInfoPort(settings.getPortForGui());
 		updateConfigurationPort(false);
 		updateConfigurationWeb(true);
 		updateConfigurationMaintenance(false);
 	}
 
-	private void updateToRunning(ServerSettings settings) {
+	private void updateToRunning(ServerConfiguration settings) {
 		updateFrameTitle(ServerStatus.RUNNING);
 		updatePowerButtonText("Stop server");
 		updateMaintenanceCheckbox(true);
 		updateServerInfoStatus("running");
-		updateServerInfoAddress(settings.getAddress());
+		updateServerInfoAddress(settings.address());
 		updateServerInfoPort(settings.getPortForGui());
 		updateConfigurationPort(false);
 		updateConfigurationWeb(false);

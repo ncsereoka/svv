@@ -1,16 +1,16 @@
 package upt.cti.svv.gui.listener;
 
-import upt.cti.svv.server.ServerSettings;
+import upt.cti.svv.server.ServerConfiguration;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class PortListener implements DocumentListener {
-	private final ServerSettings settings;
+	private final ServerConfiguration settings;
 	private final JTextField field;
 
-	public PortListener(ServerSettings settings, JTextField field) {
+	public PortListener(ServerConfiguration settings, JTextField field) {
 		this.settings = settings;
 		this.field = field;
 	}

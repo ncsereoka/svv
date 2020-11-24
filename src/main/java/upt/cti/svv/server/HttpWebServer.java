@@ -11,13 +11,13 @@ public class HttpWebServer {
 	private static final Logger log = LoggerFactory.getLogger(HttpWebServer.class);
 
 	private ServerSocket serverSocket;
-	private final ServerSettings settings;
+	private final ServerConfiguration settings;
 
-	public HttpWebServer(ServerSettings settings) {
+	public HttpWebServer(ServerConfiguration settings) {
 		this.settings = settings;
 	}
 
-	public ServerSettings getSettings() {
+	public ServerConfiguration getSettings() {
 		return settings;
 	}
 

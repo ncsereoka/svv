@@ -14,9 +14,9 @@ public class HttpConnectionHandler implements Runnable {
 	private static final Logger log = LoggerFactory.getLogger(HttpConnectionHandler.class);
 
 	private final ServerSocket serverSocket;
-	private final ServerSettings settings;
+	private final ServerConfiguration settings;
 
-	public HttpConnectionHandler(ServerSocket serverSocket, ServerSettings settings) {
+	public HttpConnectionHandler(ServerSocket serverSocket, ServerConfiguration settings) {
 		this.serverSocket = serverSocket;
 		this.settings = settings;
 	}

@@ -7,7 +7,7 @@ import java.util.Properties;
  * Abstraction of a server's settings (address, port, state, etc)
  * Extracted as an interface to avoid cyclic dependencies
  */
-public interface ServerSettings {
+public interface ServerConfiguration {
 	void updateToStopped();
 
 	void updateToMaintenance(int port);
@@ -16,11 +16,11 @@ public interface ServerSettings {
 
 	ServerStatus getStatus();
 
-	void setPort(int newPort);
+	void setPort(int port);
 
 	int getPort();
 
-	String getAddress();
+	String address();
 
 	String getPortForGui();
 

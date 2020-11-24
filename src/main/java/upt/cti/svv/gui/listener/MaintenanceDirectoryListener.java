@@ -1,6 +1,6 @@
 package upt.cti.svv.gui.listener;
 
-import upt.cti.svv.server.ServerSettings;
+import upt.cti.svv.server.ServerConfiguration;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,9 +10,9 @@ import java.io.File;
 public class MaintenanceDirectoryListener implements ActionListener, ValidDirectoryChooser {
 	private final JLabel folderLabel;
 	private final JLabel validLabel;
-	private final ServerSettings settings;
+	private final ServerConfiguration settings;
 
-	public MaintenanceDirectoryListener(JLabel folderLabel, JLabel validLabel, ServerSettings settings) {
+	public MaintenanceDirectoryListener(JLabel folderLabel, JLabel validLabel, ServerConfiguration settings) {
 		this.folderLabel = folderLabel;
 		this.validLabel = validLabel;
 		this.settings = settings;
