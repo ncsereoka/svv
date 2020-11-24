@@ -1,105 +1,123 @@
 package upt.cti.svv.app;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import upt.cti.svv.server.HttpConnection;
+import upt.cti.svv.server.exception.ConfigurationException;
+import upt.cti.svv.util.FileLoader;
+import upt.cti.svv.util.PortValidator;
+import upt.cti.svv.util.ValidatedResult;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.function.Supplier;
 
 public final class Configuration {
-	private static final String CONFIG_FILE = "config.properties";
+	private static final Logger log = LoggerFactory.getLogger(HttpConnection.class);
 
-	private static final boolean silent;
-	private static final int port;
-	private static final String address;
-	private static final File webRoot;
-	private static final File maintenance;
+	private final File configurationFile;
+	private final boolean silent;
+	private final int port;
+	private final String address;
+	private final File webRoot;
+	private final File maintenance;
 
-	static {
-		String configSilent = null;
-		String configPort = null;
-		String configWebRoot = null;
-		String configMaintenance = null;
-
-		try (FileInputStream in = new FileInputStream(CONFIG_FILE)) {
-			Properties prop = new Properties();
-			prop.load(in);
-			configSilent = prop.getProperty("silent");
-			configPort = prop.getProperty("port");
-			configWebRoot = prop.getProperty("webroot");
-			configMaintenance = prop.getProperty("maintenance");
-		} catch (Exception ignored) {
-		}
-
-		silent = Boolean.parseBoolean(configSilent);
-		port = getPort(configPort);
-		address = "127.0.0.1";
-
-		final File workingDirFile = new File(Paths.get(System.getProperty("user.dir")).toUri());
-		webRoot = loadDirectory(configWebRoot, workingDirFile);
-		maintenance = loadDirectory(configMaintenance, workingDirFile);
+	public Configuration(
+			File configurationFile,
+			boolean silent,
+			int port,
+			String address,
+			File webRoot,
+			File maintenance
+	) {
+		this.configurationFile = configurationFile;
+		this.silent = silent;
+		this.port = port;
+		this.address = address;
+		this.webRoot = webRoot;
+		this.maintenance = maintenance;
 	}
 
-	public static boolean runSilently() {
+	public boolean runSilently() {
 		return silent;
 	}
 
-	public static int defaultPort() {
+	public int defaultPort() {
 		return port;
 	}
 
-	public static String defaultAddress() {
+	public String defaultAddress() {
 		return address;
 	}
 
-	public static File defaultWebRootDir() {
+	public File defaultWebRootDir() {
 		return webRoot;
 	}
 
-	public static File defaultMaintenanceDir() {
+	public File defaultMaintenanceDir() {
 		return maintenance;
 	}
 
-	public static void persistConfiguration(Properties properties) {
-		try (FileOutputStream out = new FileOutputStream(CONFIG_FILE)) {
+	public void save(Properties properties) {
+		try (FileOutputStream out = new FileOutputStream(configurationFile)) {
 			properties.store(out, null);
-		} catch (IOException ignored) {
+		} catch (IOException e) {
+			throw new ConfigurationException("Error saving configuration.");
 		}
 	}
 
-	private static int getPort(String configPort) {
-		int parsedPort = 3000;
-		try {
-			if (configPort != null) {
-				parsedPort = Integer.parseInt(configPort);
-			}
-
-			if (parsedPort < 1025 || 65536 < parsedPort) {
-				parsedPort = 3000;
-			}
-		} catch (NumberFormatException ignored) {
-		}
-		return parsedPort;
+	public static Configuration fromFile(String configFilePath) {
+		log.info("Reading configuration from '{}'...", configFilePath);
+		return checked(() -> ValidatedResult.of(new File(configFilePath))
+				.withCondition(File::isFile)
+				.map(Configuration::fromFile)
+				.onFailThrow(() ->
+						new ConfigurationException(String.format("File '%s' does not exist.", configFilePath))));
 	}
 
-	private static File loadDirectory(String folderPath, File workDir) {
-		File tempFile;
+	public static Configuration defaultConfiguration() {
+		log.info("Using default configuration...");
+		return checked(() -> new Configuration(
+				new File("config.properties"),
+				true,
+				3000,
+				"127.0.0.1",
+				FileLoader.loadDirectory("webroot"),
+				FileLoader.loadDirectory("maintenance")));
+	}
+
+	private static Configuration checked(Supplier<? extends Configuration> supplier) {
 		try {
-			if (folderPath == null) {
-				tempFile = workDir;
-			} else {
-				Path path = Paths.get(folderPath);
-				tempFile = new File(path.toUri());
-			}
+			return supplier.get();
+		} catch (ConfigurationException e) {
+			log.error("Configuration error: {}", e.getMessage());
+			System.exit(2);
+			return null;
+		}
+	}
+
+	private static Configuration fromFile(File configurationFile) {
+		Properties prop = loadProperties(configurationFile);
+		return new Configuration(
+				configurationFile,
+				Boolean.parseBoolean(prop.getProperty("silent")),
+				PortValidator.read(prop.getProperty("port")),
+				"127.0.0.1",
+				FileLoader.loadDirectory(prop.getProperty("webroot")),
+				FileLoader.loadDirectory(prop.getProperty("maintenance")));
+	}
+
+	private static Properties loadProperties(File configurationFile) {
+		Properties prop = new Properties();
+
+		try (FileInputStream in = new FileInputStream(configurationFile)) {
+			prop.load(in);
 		} catch (Exception e) {
-			tempFile = workDir;
+			throw new ConfigurationException("Error loading configuration from file.");
 		}
-		return tempFile;
-	}
-
-	private Configuration() {
-		throw new UnsupportedOperationException();
+		return prop;
 	}
 }

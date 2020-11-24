@@ -24,6 +24,8 @@ public interface ServerSettings {
 
 	String getPortForGui();
 
+	boolean isSilent();
+
 	void setWebRootDir(File selectedDir);
 
 	void setMaintenanceDir(File selectedDir);
