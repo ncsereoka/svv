@@ -14,28 +14,30 @@ public class HttpConnectionHandler implements Runnable {
 	private static final Logger log = LoggerFactory.getLogger(HttpConnectionHandler.class);
 
 	private final ServerSocket serverSocket;
-	private final ServerConfiguration settings;
+	private final ServerConfiguration configuration;
+	private final HttpRequestHandler requestHandler;
 
-	public HttpConnectionHandler(ServerSocket serverSocket, ServerConfiguration settings) {
+	public HttpConnectionHandler(ServerSocket serverSocket, ServerConfiguration configuration) {
 		this.serverSocket = serverSocket;
-		this.settings = settings;
+		this.configuration = configuration;
+		this.requestHandler = new HttpRequestHandler(configuration);
 	}
 
 	@Override
 	public void run() {
 		try {
-			while (!this.settings.getStatus().equals(ServerStatus.STOPPED)) {
+			while (!this.configuration.getStatus().equals(ServerStatus.STOPPED)) {
 				log.info("Waiting for new connections...");
 				handleNewConnection();
 			}
 		} catch (IOException e) {
-			log.info("Handler interrupted");
+			log.error("Handler interrupted.");
 		}
 	}
 
 	private void handleNewConnection() throws IOException {
 		Socket newClientConnection = serverSocket.accept();
-		final HttpConnection newHttpConnection = new HttpConnection(newClientConnection);
+		final HttpConnection newHttpConnection = new HttpConnection(newClientConnection, requestHandler);
 		new Thread(newHttpConnection).start();
 	}
 }
