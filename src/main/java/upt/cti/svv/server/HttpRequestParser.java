@@ -3,6 +3,7 @@ package upt.cti.svv.server;
 import upt.cti.svv.server.exception.InternalServerErrorException;
 import upt.cti.svv.server.exception.InvalidRequestException;
 import upt.cti.svv.util.ImmutablePair;
+import upt.cti.svv.util.ValidatedResult;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,10 +51,9 @@ public final class HttpRequestParser {
 	}
 
 	private static ImmutablePair<String, String> parseHeader(String requestLine) {
-		final String[] lineElements = requestLine.split(":", 2);
-		if (lineElements.length != 2) {
-			throw new InvalidRequestException("Unexpected header format");
-		}
+		final String[] lineElements = ValidatedResult.of(requestLine.split(":", 2))
+				.withCondition(arr -> arr.length == 2)
+				.onFailThrow(() -> new InvalidRequestException("Unexpected header format"));
 
 		final String key = lineElements[0].strip();
 		if (key == null || key.equals("") || key.contains(" ")) {
@@ -70,7 +70,12 @@ public final class HttpRequestParser {
 
 	private static HttpRequestLine parseRequestLineElements(BufferedReader reader) {
 		try {
-			final String[] lineElements = reader.readLine().split(" ");
+			final String readerLine = reader.readLine();
+			if (readerLine == null) {
+				throw new InvalidRequestException("First line of the request has invalid format.");
+			}
+
+			final String[] lineElements = readerLine.split(" ");
 			if (lineElements.length != 3) {
 				throw new InvalidRequestException("First line of the request has invalid format.");
 			}
@@ -87,17 +92,15 @@ public final class HttpRequestParser {
 	}
 
 	private static String parseVersion(String version) {
-		if (!version.equals(HttpVersion.HTTP_1_1.getName())) {
-			throw new InvalidRequestException("Invalid HTTP version");
-		}
-		return version;
+		return ValidatedResult.of(version)
+				.withCondition(v -> v.equals(HttpVersion.HTTP_1_1.name))
+				.onFailThrow(() -> new InvalidRequestException("Invalid HTTP version"));
 	}
 
 	private static String parseUrl(String url) {
-		if (url.charAt(0) != '/') {
-			throw new InvalidRequestException("Invalid request URL");
-		}
-		return url;
+		return ValidatedResult.of(url)
+				.withCondition(s -> s.charAt(0) == '/')
+				.onFailThrow(() -> new InvalidRequestException("Invalid request URL"));
 	}
 
 	private static HttpMethod parseMethod(String string) {

@@ -33,7 +33,7 @@ public final class ConfigurationLoader {
 				true,
 				3000,
 				"127.0.0.1",
-				FileLoader.loadDirectory("webroot"),
+				FileLoader.loadDirectory("www"),
 				FileLoader.loadDirectory("maintenance")));
 	}
 
