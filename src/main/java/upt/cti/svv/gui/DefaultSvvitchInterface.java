@@ -1,9 +1,9 @@
 package upt.cti.svv.gui;
 
-import upt.cti.svv.server.ServerStatus;
-import upt.cti.svv.server.ServerConfiguration;
 import upt.cti.svv.gui.listener.*;
 import upt.cti.svv.server.HttpWebServer;
+import upt.cti.svv.server.ServerConfiguration;
+import upt.cti.svv.server.ServerStatus;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
@@ -97,6 +97,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		updateConfigurationPort(false);
 		updateConfigurationWeb(true);
 		updateConfigurationMaintenance(false);
+		this.server.restart();
 	}
 
 	private void updateToRunning(ServerConfiguration settings) {
@@ -109,7 +110,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		updateConfigurationPort(false);
 		updateConfigurationWeb(false);
 		updateConfigurationMaintenance(true);
-		this.server.start();
+		this.server.restart();
 	}
 
 	private void updateConfigurationMaintenance(boolean on) {

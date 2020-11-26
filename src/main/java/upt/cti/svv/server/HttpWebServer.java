@@ -37,6 +37,11 @@ public class HttpWebServer {
 		createNewHandler();
 	}
 
+	public void restart() {
+		stop();
+		start();
+	}
+
 	private void bindToPort(int port) {
 		try {
 			this.serverSocket = new ServerSocket(port);

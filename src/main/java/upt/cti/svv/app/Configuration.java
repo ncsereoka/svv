@@ -1,5 +1,7 @@
 package upt.cti.svv.app;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import upt.cti.svv.server.ServerConfiguration;
 import upt.cti.svv.server.ServerStatus;
 import upt.cti.svv.server.exception.ConfigurationException;
@@ -10,6 +12,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 public final class Configuration implements ServerConfiguration {
+	private static final Logger log = LoggerFactory.getLogger(Configuration.class);
+
 	private final File configurationFile;
 	private final boolean silent;
 	private int port;
@@ -47,12 +51,14 @@ public final class Configuration implements ServerConfiguration {
 
 	@Override
 	public void updateToMaintenance(int port) {
+		log.info("Server state changed to MAINTENANCE");
 		this.status = ServerStatus.MAINTENANCE;
 		this.port = port;
 	}
 
 	@Override
 	public void updateToRunning(int port) {
+		log.info("Server state changed to RUNNING");
 		this.status = ServerStatus.RUNNING;
 		this.port = port;
 	}
@@ -118,5 +124,6 @@ public final class Configuration implements ServerConfiguration {
 		} catch (IOException e) {
 			throw new ConfigurationException("Error saving configuration.");
 		}
+		log.info("New configuration saved.");
 	}
 }

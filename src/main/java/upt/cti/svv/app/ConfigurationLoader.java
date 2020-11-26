@@ -30,7 +30,7 @@ public final class ConfigurationLoader {
 		log.info("Using default configuration...");
 		return checked(() -> new Configuration(
 				new File("config.properties"),
-				true,
+				false,
 				3000,
 				"127.0.0.1",
 				FileLoader.loadDirectory("www"),

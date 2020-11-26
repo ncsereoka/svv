@@ -31,7 +31,7 @@ public class HttpConnectionHandler implements Runnable {
 				handleNewConnection();
 			}
 		} catch (IOException e) {
-			log.error("Handler interrupted.");
+			log.info("Handler interrupted");
 		}
 	}
 
