@@ -66,6 +66,8 @@ public final class HttpRequestHandler {
 	private String getContentType(String path) {
 		if (path.endsWith(".html") || path.endsWith(".htm")) {
 			return "text/html";
+		} else if (path.endsWith(".css")) {
+			return "text/css";
 		} else if (path.endsWith(".jpg") || path.endsWith(".jpeg")) {
 			return "image/jpeg";
 		} else if (path.endsWith(".txt")) {
