@@ -7,6 +7,8 @@ import upt.cti.svv.server.ServerStatus;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class DefaultSvvitchInterface implements SvvitchInterface {
 	private static final String APPLICATION_NAME = "Svvitch";
@@ -51,6 +53,16 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 		setUpPortRelated(settings);
 		setUpWebRootRelated(settings);
 		setUpMaintenanceRelated(settings);
+		setUpWindowListener();
+	}
+
+	private void setUpWindowListener() {
+		this.frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				updateToStopped();
+			}
+		});
 	}
 
 	private void setUpPortRelated(ServerConfiguration settings) {

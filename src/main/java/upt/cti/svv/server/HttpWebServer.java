@@ -12,6 +12,7 @@ public class HttpWebServer {
 
 	private ServerSocket serverSocket;
 	private final ServerConfiguration settings;
+	private Thread thread;
 
 	public HttpWebServer(ServerConfiguration settings) {
 		this.settings = settings;
@@ -30,11 +31,20 @@ public class HttpWebServer {
 				log.info("Error stopping server");
 			}
 		}
+
+		if (thread != null) {
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				log.info("Error stopping server");
+			}
+		}
 	}
 
 	public void start() {
 		bindToPort(this.settings.getPort());
-		createNewHandler();
+		thread = new Thread(new HttpConnectionHandler(serverSocket, settings));
+		thread.start();
 	}
 
 	public void restart() {
@@ -51,7 +61,4 @@ public class HttpWebServer {
 		log.info("Server listening on port {}...", port);
 	}
 
-	private void createNewHandler() {
-		new Thread(new HttpConnectionHandler(serverSocket, settings)).start();
-	}
 }
