@@ -12,10 +12,10 @@ public final class PortValidator {
 
 		return ValidatedResult.of(port)
 				.withCondition(PortValidator::isValidPort)
-				.onFailThrow(() -> new ConfigurationException(String.format("Specified port '%d' is invalid", port)));
+				.onFailThrow(() -> new ConfigurationException(String.format("Specified port '%d' is invalid. Please use a value between 1025 and 65535", port)));
 	}
 
-	private static boolean isValidPort(Integer p) {
+	public static boolean isValidPort(Integer p) {
 		return 1025 <= p && p <= 65535;
 	}
 

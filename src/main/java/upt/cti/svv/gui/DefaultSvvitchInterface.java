@@ -46,7 +46,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 
 	private void setUpListeners(ServerConfiguration settings) {
 		((JButton) ComponentMap.get(ComponentMap.Identifier.POWER_BUTTON))
-				.addActionListener(new PowerButtonListener(this, settings));
+				.addActionListener(new PowerButtonListener(this, settings, frame));
 		((JCheckBox) ComponentMap.get(ComponentMap.Identifier.MAINTENANCE_CHECKBOX))
 				.addActionListener(new MaintenanceCheckboxListener(this, settings));
 
@@ -61,6 +61,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				updateToStopped();
+				server.getSettings().store();
 			}
 		});
 	}

@@ -36,17 +36,10 @@ public class PortListener implements DocumentListener {
 	}
 
 	private int getValidPort() {
-		int number;
 		try {
-			number = Integer.parseInt(field.getText());
-			if (number > 65535) {
-				number = 65535;
-			} else if (number < 1025) {
-				number = 1025;
-			}
+			return Integer.parseInt(field.getText());
 		} catch (NumberFormatException e) {
-			number = 3000;
+			return 3000;
 		}
-		return number;
 	}
 }

@@ -109,21 +109,21 @@ public final class Configuration implements ServerConfiguration {
 	}
 
 	@Override
-	public Properties toProperties() {
+	public void store() {
+		try (FileOutputStream out = new FileOutputStream(configurationFile)) {
+			toProperties().store(out, null);
+		} catch (IOException e) {
+			throw new ConfigurationException("Error saving configuration.");
+		}
+		log.info("New configuration saved.");
+	}
+
+	private Properties toProperties() {
 		final Properties props = new Properties();
 		props.setProperty("silent", String.valueOf(silent));
 		props.setProperty("port", String.valueOf(port));
 		props.setProperty("webroot", webRoot.getAbsolutePath());
 		props.setProperty("maintenance", maintenance.getAbsolutePath());
 		return props;
-	}
-
-	public void save(Properties properties) {
-		try (FileOutputStream out = new FileOutputStream(configurationFile)) {
-			properties.store(out, null);
-		} catch (IOException e) {
-			throw new ConfigurationException("Error saving configuration.");
-		}
-		log.info("New configuration saved.");
 	}
 }

@@ -17,6 +17,8 @@ import java.util.function.Supplier;
 public final class ConfigurationLoader {
 	private static final Logger log = LoggerFactory.getLogger(HttpConnection.class);
 
+	private static final File DEFAULT_CONFIG_FILE = new File("config.properties");
+
 	public static ServerConfiguration fromFile(String configFilePath) {
 		log.info("Reading configuration from '{}'...", configFilePath);
 		return checked(() -> ValidatedResult.of(new File(configFilePath))
@@ -27,14 +29,19 @@ public final class ConfigurationLoader {
 	}
 
 	public static ServerConfiguration defaultConfiguration() {
-		log.info("Using default configuration...");
-		return checked(() -> new Configuration(
-				new File("config.properties"),
-				false,
-				3000,
-				"127.0.0.1",
-				FileLoader.loadDirectory("www"),
-				FileLoader.loadDirectory("maintenance")));
+		if (DEFAULT_CONFIG_FILE.exists()) {
+			log.info("Using default configuration file...");
+			return fromFile(DEFAULT_CONFIG_FILE);
+		} else {
+			log.info("Default configuration file not found. Using internal default configuration...");
+			return checked(() -> new Configuration(
+					DEFAULT_CONFIG_FILE,
+					false,
+					3000,
+					"127.0.0.1",
+					FileLoader.loadDirectory("www"),
+					FileLoader.loadDirectory("maintenance")));
+		}
 	}
 
 	private static ServerConfiguration checked(Supplier<? extends ServerConfiguration> supplier) {

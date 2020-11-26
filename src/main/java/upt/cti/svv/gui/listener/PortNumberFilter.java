@@ -20,8 +20,8 @@ public class PortNumberFilter extends DocumentFilter {
 
 	private boolean test(String text) {
 		try {
-			int val = Integer.parseInt(text);
-			return 1024 < val && val < 65536;
+			Integer.parseInt(text);
+			return true;
 		} catch (NumberFormatException e) {
 			return false;
 		}

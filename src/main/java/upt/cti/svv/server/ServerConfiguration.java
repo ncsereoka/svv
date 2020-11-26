@@ -34,5 +34,5 @@ public interface ServerConfiguration {
 
 	String getMaintenanceDirForGui();
 
-	Properties toProperties();
+	void store();
 }
