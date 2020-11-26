@@ -3,6 +3,7 @@ import com.github.spotbugs.snom.SpotBugsReport
 plugins {
     id 'java'
     id "com.github.spotbugs" version "4.6.0"
+    id 'jacoco'
 }
 
 repositories {
@@ -26,7 +27,6 @@ spotbugsMain {
     } as Closure<NamedDomainObjectContainer<? extends SpotBugsReport>>))
 }
 
-
 jar {
     manifest {
         attributes 'Main-Class': 'upt.cti.svv.app.Svvitch'
@@ -35,4 +35,9 @@ jar {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+}
+
+// Make JaCoCo report generation part of the 'check' lifecycle phase
+tasks.named("check") {
+    dependsOn(jacocoTestReport)
 }

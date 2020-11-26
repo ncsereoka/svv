@@ -1,5 +1,5 @@
 package upt.cti.svv.server;
 
-enum HttpMethod {
+public enum HttpMethod {
 	GET
 }

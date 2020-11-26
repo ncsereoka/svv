@@ -1,6 +1,7 @@
 package upt.cti.svv.server;
 
 import upt.cti.svv.util.ByteUtil;
+import upt.cti.svv.util.MimeUtil;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,10 +10,11 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public final class HttpRequestHandler {
-	private static final List<String> defaultPaths = List.of("index.html", "index.htm", "index.html");
-	private static final byte[] RESPONSE_404 =
+	public static final byte[] RESPONSE_404 =
 			("HTTP/1.1 404 Not Found\nContent-Type: text/html\nConnection: close\n\n" +
 					"<html><body><h1>404 NOT FOUND</h1></body></html").getBytes();
+
+	private static final List<String> defaultPaths = List.of("index.html", "index.htm", "index.html");
 
 	private final ServerConfiguration config;
 
@@ -58,23 +60,9 @@ public final class HttpRequestHandler {
 	}
 
 	private byte[] getOkResponseHeaderPart(Path path) {
-		final String contentType = getContentType(path.toString());
+		final String contentType = MimeUtil.getContentType(path.toString());
 		final String headString = "HTTP/1.1 200 OK\nConnection: close\nContent-Type: " + contentType + "\n\n";
 		return headString.getBytes();
-	}
-
-	private String getContentType(String path) {
-		if (path.endsWith(".html") || path.endsWith(".htm")) {
-			return "text/html";
-		} else if (path.endsWith(".css")) {
-			return "text/css";
-		} else if (path.endsWith(".jpg") || path.endsWith(".jpeg")) {
-			return "image/jpeg";
-		} else if (path.endsWith(".txt")) {
-			return "text/plain";
-		} else {
-			return "application/octet-stream";
-		}
 	}
 
 	private Path getRequestedUrl(String url) {

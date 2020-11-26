@@ -1,6 +1,7 @@
 package upt.cti.svv.server;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class HttpRequest {
 	private final HttpMethod method;
@@ -40,11 +41,30 @@ public class HttpRequest {
 				.append("\nURL: ").append(this.url)
 				.append("\nHTTP version: ").append(this.httpVersion)
 				.append("\nHeaders:");
-		this.headers.entrySet()
-				.stream()
-				.map(entry -> String.format("\n\t%s: %s", entry.getKey(), entry.getValue()))
-				.forEach(builder::append);
+		Optional.ofNullable(this.headers)
+				.map(Map::entrySet)
+				.ifPresent(entries ->
+						entries.stream()
+								.map(entry -> String.format("\n\t%s: %s", entry.getKey(), entry.getValue()))
+								.forEach(builder::append));
 
+		return builder.toString();
+	}
+
+	public String asIncomingRequest() {
+		final StringBuilder builder = new StringBuilder()
+				.append(this.method)
+				.append(" ")
+				.append(this.url)
+				.append(" ")
+				.append(this.httpVersion)
+				.append("\n");
+		Optional.ofNullable(this.headers)
+				.map(Map::entrySet)
+				.ifPresent(entries ->
+						entries.stream()
+								.map(entry -> String.format("%s: %s\n", entry.getKey(), entry.getValue()))
+								.forEach(builder::append));
 		return builder.toString();
 	}
 }

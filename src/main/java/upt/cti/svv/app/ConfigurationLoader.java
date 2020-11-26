@@ -66,14 +66,13 @@ public final class ConfigurationLoader {
 	}
 
 	private static Properties loadProperties(File configurationFile) {
-		Properties prop = new Properties();
-
 		try (FileInputStream in = new FileInputStream(configurationFile)) {
+			Properties prop = new Properties();
 			prop.load(in);
+			return prop;
 		} catch (Exception e) {
 			throw new ConfigurationException("Error loading configuration from file.");
 		}
-		return prop;
 	}
 
 	private ConfigurationLoader() {

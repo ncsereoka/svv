@@ -1,4 +1,4 @@
-package upt.cti.svv;
+package upt.cti.svv.test;
 
 import org.junit.Assert;
 import org.junit.Test;
