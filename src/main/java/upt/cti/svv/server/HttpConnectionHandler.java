@@ -27,7 +27,6 @@ public class HttpConnectionHandler implements Runnable {
 	public void run() {
 		try {
 			while (!this.configuration.getStatus().equals(ServerStatus.STOPPED)) {
-				log.info("Waiting for new connections...");
 				handleNewConnection();
 			}
 		} catch (IOException e) {

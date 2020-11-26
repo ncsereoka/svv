@@ -4,7 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import upt.cti.svv.server.exception.InternalServerErrorException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.Socket;
 
 public class HttpConnection implements Runnable {
@@ -21,8 +24,6 @@ public class HttpConnection implements Runnable {
 
 	@Override
 	public void run() {
-		log.info("New client connection");
-
 		try {
 			final OutputStream out = clientSocket.getOutputStream();
 			final BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
