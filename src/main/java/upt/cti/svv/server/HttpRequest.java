@@ -40,9 +40,10 @@ public class HttpRequest {
 				.append("\nURL: ").append(this.url)
 				.append("\nHTTP version: ").append(this.httpVersion)
 				.append("\nHeaders:");
-		for (String key : this.headers.keySet()) {
-			builder.append(String.format("\n\t%s: %s", key, this.headers.get(key)));
-		}
+		this.headers.entrySet()
+				.stream()
+				.map(entry -> String.format("\n\t%s: %s", entry.getKey(), entry.getValue()))
+				.forEach(builder::append);
 
 		return builder.toString();
 	}

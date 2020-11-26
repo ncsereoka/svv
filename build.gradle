@@ -1,5 +1,8 @@
+import com.github.spotbugs.snom.SpotBugsReport
+
 plugins {
     id 'java'
+    id "com.github.spotbugs" version "4.6.0"
 }
 
 repositories {
@@ -12,6 +15,18 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-core', version: '3.5.13'
 }
 
+// Example to configure HTML report
+spotbugsMain {
+    reports(({
+        html {
+            enabled = true
+            destination = file("spotbugs.html")
+            stylesheet = 'fancy-hist.xsl'
+        }
+    } as Closure<NamedDomainObjectContainer<? extends SpotBugsReport>>))
+}
+
+
 jar {
     manifest {
         attributes 'Main-Class': 'upt.cti.svv.app.Svvitch'
@@ -21,4 +36,3 @@ jar {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
-
