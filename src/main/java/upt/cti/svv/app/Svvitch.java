@@ -43,8 +43,7 @@ public final class Svvitch {
 			System.err.println("Usage: java -jar <jar_file> [configuration file]");
 			System.exit(1);
 		}
-		final ServerConfiguration configuration = config(args.length == 0, args[0]);
-		new Svvitch(configuration).start();
+		new Svvitch(config(args)).start();
 	}
 
 	public void start() {
@@ -54,10 +53,11 @@ public final class Svvitch {
 		}
 	}
 
-	private static ServerConfiguration config(boolean useDefaultConfiguration, String configFilePath) {
+	private static ServerConfiguration config(String[] configFilePath) {
 		try {
+			final boolean useDefaultConfiguration = configFilePath.length == 0;
 			return useDefaultConfiguration ? ConfigurationLoader.defaultConfiguration() :
-					ConfigurationLoader.fromFile(configFilePath);
+					ConfigurationLoader.fromFile(configFilePath[0]);
 		} catch (NonexistingConfigurationException e) {
 			log.error("Configuration error: {}", e.getMessage());
 			System.exit(2);

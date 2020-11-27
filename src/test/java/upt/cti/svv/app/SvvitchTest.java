@@ -2,11 +2,12 @@ package upt.cti.svv.app;
 
 import org.junit.Assert;
 import org.junit.Test;
-import upt.cti.svv.app.Configuration;
-import upt.cti.svv.app.Svvitch;
 import upt.cti.svv.gui.SvvitchInterface;
 import upt.cti.svv.server.HttpWebServer;
+import upt.cti.svv.server.ResourceUtil;
 import upt.cti.svv.server.ServerStatus;
+
+import java.net.URISyntaxException;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -30,5 +31,16 @@ public class SvvitchTest {
 		final ServerStatus svvitchStatus = loudSvvitch.getSettings().getStatus();
 		Assert.assertEquals("Svvitch is in STOPPED state.", ServerStatus.STOPPED, svvitchStatus);
 		Assert.assertNotNull("GUI is not loaded..", loudSvvitch.getGui());
+	}
+
+	@Test
+	public void default_config_works() {
+		Svvitch.main(new String[]{});
+	}
+
+	@Test
+	public void custom_config_works() throws URISyntaxException {
+		final String configFile = ResourceUtil.loadResourceFile(getClass(), "config.properties").getAbsolutePath();
+		Svvitch.main(new String[]{configFile});
 	}
 }
