@@ -1,4 +1,4 @@
-package upt.cti.svv.test;
+package upt.cti.svv.server;
 
 import org.junit.Test;
 import upt.cti.svv.server.HttpRequestParser;

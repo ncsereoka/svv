@@ -1,4 +1,4 @@
-package upt.cti.svv.test;
+package upt.cti.svv.util;
 
 import org.junit.Test;
 import upt.cti.svv.util.ByteUtil;

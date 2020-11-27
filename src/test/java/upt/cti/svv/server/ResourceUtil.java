@@ -1,4 +1,4 @@
-package upt.cti.svv.test;
+package upt.cti.svv.server;
 
 import java.io.File;
 import java.io.IOException;

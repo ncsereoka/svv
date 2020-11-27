@@ -1,9 +1,8 @@
-package upt.cti.svv.test;
+package upt.cti.svv.server;
 
 import org.junit.Before;
 import org.junit.Test;
 import upt.cti.svv.app.Configuration;
-import upt.cti.svv.server.*;
 import upt.cti.svv.util.ByteUtil;
 import upt.cti.svv.util.MimeUtil;
 
