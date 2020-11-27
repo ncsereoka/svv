@@ -11,24 +11,24 @@ import java.awt.event.ActionListener;
 
 public class PowerButtonListener implements ActionListener {
 	private final SvvitchInterface gui;
-	private final ServerConfiguration settings;
+	private final ServerConfiguration config;
 	private final JFrame frame;
 
-	public PowerButtonListener(SvvitchInterface gui, ServerConfiguration settings, JFrame frame) {
+	public PowerButtonListener(SvvitchInterface gui, ServerConfiguration config, JFrame frame) {
 		this.gui = gui;
-		this.settings = settings;
+		this.config = config;
 		this.frame = frame;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
-		if (PortValidator.isValidPort(settings.getPort())) {
-			if (settings.getStatus().equals(ServerStatus.STOPPED)) {
-				settings.updateToRunning(settings.getPort());
+		if (PortValidator.isValidPort(config.getPort())) {
+			if (config.getStatus().equals(ServerStatus.STOPPED)) {
+				config.updateToRunning(config.getPort());
 			} else {
-				settings.updateToStopped();
+				config.updateToStopped();
 			}
-			gui.update(settings);
+			gui.update(config);
 		} else {
 			JOptionPane.showMessageDialog(
 					frame,
