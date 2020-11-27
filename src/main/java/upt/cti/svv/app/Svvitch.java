@@ -1,10 +1,13 @@
 package upt.cti.svv.app;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import upt.cti.svv.gui.DefaultSvvitchInterface;
 import upt.cti.svv.gui.SvvitchInterface;
 import upt.cti.svv.server.HttpWebServer;
 import upt.cti.svv.server.ServerConfiguration;
 import upt.cti.svv.server.ServerStatus;
+import upt.cti.svv.server.exception.NonexistingConfigurationException;
 
 import java.util.Optional;
 
@@ -12,6 +15,8 @@ import java.util.Optional;
  * Main application class - contains the server configuration (or settings), the GUI and the server itself
  */
 public final class Svvitch {
+	private static final Logger log = LoggerFactory.getLogger(Svvitch.class);
+
 	private final ServerConfiguration settings;
 	private final SvvitchInterface gui;
 	private final HttpWebServer server;
@@ -34,20 +39,29 @@ public final class Svvitch {
 	}
 
 	public static void main(String[] args) {
-		if (args.length == 0) {
-			new Svvitch(ConfigurationLoader.defaultConfiguration()).start();
-		} else if (args.length == 1) {
-			new Svvitch(ConfigurationLoader.fromFile(args[0])).start();
-		} else {
+		if (args.length > 1) {
 			System.err.println("Usage: java -jar <jar_file> [configuration file]");
 			System.exit(1);
 		}
+		final ServerConfiguration configuration = config(args.length == 0, args[0]);
+		new Svvitch(configuration).start();
 	}
 
 	public void start() {
 		Optional.ofNullable(gui).ifPresent(SvvitchInterface::display);
 		if (this.settings.getStatus().equals(ServerStatus.RUNNING)) {
 			this.server.start();
+		}
+	}
+
+	private static ServerConfiguration config(boolean useDefaultConfiguration, String configFilePath) {
+		try {
+			return useDefaultConfiguration ? ConfigurationLoader.defaultConfiguration() :
+					ConfigurationLoader.fromFile(configFilePath);
+		} catch (NonexistingConfigurationException e) {
+			log.error("Configuration error: {}", e.getMessage());
+			System.exit(2);
+			return null;
 		}
 	}
 

@@ -5,9 +5,11 @@ import org.junit.Test;
 import upt.cti.svv.server.ResourceUtil;
 import upt.cti.svv.server.ServerConfiguration;
 import upt.cti.svv.server.ServerStatus;
-import upt.cti.svv.server.exception.ConfigurationException;
+import upt.cti.svv.server.exception.NonexistingConfigurationException;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertEquals;
@@ -58,8 +60,20 @@ public class ConfigurationTest {
 
 	}
 
-	@Test(expected = ConfigurationException.class)
+	@Test(expected = NonexistingConfigurationException.class)
 	public void loader_fails_for_nonexistent_config_file() {
 		ConfigurationLoader.fromFile("gobblegook");
+	}
+
+	@Test
+	public void default_config_loads_successfully() {
+		ConfigurationLoader.defaultConfiguration();
+	}
+
+	@Test(expected = InvocationTargetException.class)
+	public void instantiation_fails() throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
+		Constructor<ConfigurationLoader> c = ConfigurationLoader.class.getDeclaredConstructor();
+		c.setAccessible(true);
+		c.newInstance();
 	}
 }
