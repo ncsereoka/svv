@@ -4,17 +4,20 @@ import org.junit.Before;
 import org.junit.Test;
 import upt.cti.svv.app.Configuration;
 import upt.cti.svv.gui.listener.MaintenanceCheckboxListener;
+import upt.cti.svv.gui.listener.PortListener;
 import upt.cti.svv.gui.listener.PowerButtonListener;
 import upt.cti.svv.server.ResourceUtil;
 import upt.cti.svv.server.ServerConfiguration;
 import upt.cti.svv.server.ServerStatus;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
 import java.awt.event.ActionEvent;
 import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ListenerTest {
 	private ServerConfiguration config;
@@ -62,5 +65,18 @@ public class ListenerTest {
 		assertEquals(ServerStatus.MAINTENANCE, config.getStatus());
 		listener.actionPerformed(mock(ActionEvent.class));
 		assertEquals(ServerStatus.RUNNING, config.getStatus());
+	}
+
+	@Test
+	public void port_listener() {
+		final JTextField textField = mock(JTextField.class);
+		when(textField.getText()).thenReturn("3001").thenReturn("3001a");
+		final PortListener listener = new PortListener(config,textField);
+
+		assertEquals(3000, config.getPort());
+		listener.changedUpdate(mock(DocumentEvent.class));
+		assertEquals(3001, config.getPort());
+		listener.insertUpdate(mock(DocumentEvent.class));
+		assertEquals(3000, config.getPort());
 	}
 }
