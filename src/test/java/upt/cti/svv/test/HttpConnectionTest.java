@@ -3,9 +3,7 @@ package upt.cti.svv.test;
 import org.junit.Before;
 import org.junit.Test;
 import upt.cti.svv.app.Configuration;
-import upt.cti.svv.server.HttpConnection;
-import upt.cti.svv.server.HttpRequestHandler;
-import upt.cti.svv.server.ServerConfiguration;
+import upt.cti.svv.server.*;
 import upt.cti.svv.util.ByteUtil;
 import upt.cti.svv.util.MimeUtil;
 
@@ -22,7 +20,6 @@ public class HttpConnectionTest {
 	private Socket clientSocket;
 	private HttpConnection httpConnection;
 	private ByteArrayOutputStream outputStream;
-	private InputStream requestStream;
 
 	@Before
 	public void setupConnection() throws IOException, URISyntaxException {
@@ -71,7 +68,7 @@ public class HttpConnectionTest {
 	}
 
 	private InputStream requestInputStream(String url) {
-		final String request = HttpRequestUtil.newBasicGet(url);
+		final String request = newBasicGet(url);
 		return new BufferedInputStream(new ByteArrayInputStream(request.getBytes()));
 	}
 
@@ -85,5 +82,9 @@ public class HttpConnectionTest {
 		final String contentType = MimeUtil.getContentType(path);
 		final String headString = "HTTP/1.1 200 OK\nConnection: close\nContent-Type: " + contentType + "\n\n";
 		return headString.getBytes();
+	}
+
+	private String newBasicGet(String url) {
+		return new HttpRequest(HttpMethod.GET, url, HttpVersion.HTTP_1_1.name, null).asIncomingRequest();
 	}
 }
