@@ -16,12 +16,21 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-core', version: '3.5.13'
 }
 
-// Example to configure HTML report
 spotbugsMain {
     reports(({
         html {
             enabled = true
-            destination = file("spotbugs.html")
+            destination = file("$buildDir/reports/spotbugs/spotbugs_main.html")
+            stylesheet = 'fancy-hist.xsl'
+        }
+    } as Closure<NamedDomainObjectContainer<? extends SpotBugsReport>>))
+}
+
+spotbugsTest {
+    reports(({
+        html {
+            enabled = true
+            destination = file("$buildDir/reports/spotbugs/spotbugs_test.html")
             stylesheet = 'fancy-hist.xsl'
         }
     } as Closure<NamedDomainObjectContainer<? extends SpotBugsReport>>))

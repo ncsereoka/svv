@@ -7,12 +7,20 @@ import java.util.Optional;
 public final class PortValidator {
 	public static int read(String configPort) {
 		final int port = Optional.ofNullable(configPort)
-				.map(Integer::parseInt)
+				.map(PortValidator::parseInt)
 				.orElseThrow(() -> new ConfigurationException("Configuration port not specified."));
 
 		return ValidatedResult.of(port)
 				.withCondition(PortValidator::isValidPort)
 				.onFailThrow(() -> new ConfigurationException(String.format("Specified port '%d' is invalid. Please use a value between 1025 and 65535", port)));
+	}
+
+	private static int parseInt(String portString) {
+		try {
+			return Integer.parseInt(portString);
+		} catch (NumberFormatException e) {
+			throw new ConfigurationException("Invalid port specified.");
+		}
 	}
 
 	public static boolean isValidPort(Integer p) {

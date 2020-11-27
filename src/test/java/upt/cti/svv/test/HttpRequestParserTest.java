@@ -6,6 +6,8 @@ import upt.cti.svv.server.exception.InvalidRequestException;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 public class HttpRequestParserTest {
 	private static final String VALID_GET_TO_ROOT = "GET / HTTP/1.1\n";
@@ -57,6 +59,13 @@ public class HttpRequestParserTest {
 	@Test(expected = InvalidRequestException.class)
 	public void incomplete_header() {
 		parse(VALID_GET_TO_ROOT + VALID_TEST_HEADERS + "Referer:\n");
+	}
+
+	@Test(expected = InvocationTargetException.class)
+	public void instantiation_fails() throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
+		Constructor<HttpRequestParser> c = HttpRequestParser.class.getDeclaredConstructor();
+		c.setAccessible(true);
+		c.newInstance();
 	}
 
 	private void parse(String text) {
