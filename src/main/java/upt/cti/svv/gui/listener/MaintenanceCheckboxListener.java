@@ -9,20 +9,20 @@ import java.awt.event.ActionListener;
 
 public class MaintenanceCheckboxListener implements ActionListener {
 	private final SvvitchInterface gui;
-	private final ServerConfiguration settings;
+	private final ServerConfiguration config;
 
-	public MaintenanceCheckboxListener(SvvitchInterface gui, ServerConfiguration settings) {
+	public MaintenanceCheckboxListener(SvvitchInterface gui, ServerConfiguration config) {
 		this.gui = gui;
-		this.settings = settings;
+		this.config = config;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
-		if (settings.getStatus().equals(ServerStatus.MAINTENANCE)) {
-			settings.updateToRunning(settings.getPort());
+		if (config.getStatus().equals(ServerStatus.MAINTENANCE)) {
+			config.updateToRunning(config.getPort());
 		} else {
-			settings.updateToMaintenance(settings.getPort());
+			config.updateToMaintenance(config.getPort());
 		}
-		gui.update(settings);
+		gui.update(config);
 	}
 }
