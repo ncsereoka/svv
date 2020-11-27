@@ -18,7 +18,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 	public DefaultSvvitchInterface(HttpWebServer server) {
 		this.server = server;
 		this.frame = InterfaceBuilder.newInterface();
-		setUpListeners(server.getSettings());
+		setUpListeners(server.getConfig());
 		updateToStopped();
 	}
 
@@ -61,7 +61,7 @@ public class DefaultSvvitchInterface implements SvvitchInterface {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				updateToStopped();
-				server.getSettings().store();
+				server.getConfig().store();
 			}
 		});
 	}
