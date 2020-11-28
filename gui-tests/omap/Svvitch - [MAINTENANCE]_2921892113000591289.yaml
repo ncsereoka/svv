@@ -1,0 +1,100 @@
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: accessibleName, value: maintenance}
+    - {method: equals, name: type, value: JLabel}
+    generalProperties:
+    - {name: labelText, value: 'lbl:maintenance'}
+    - {name: component.class.simpleName, value: JLabel}
+    - {name: type, value: JLabel}
+    - {name: enabled, value: 'true'}
+    - {name: indexOfType, value: '1'}
+    - {name: instanceOf, value: javax.swing.JLabel}
+    - {name: component.class.name, value: javax.swing.JLabel}
+    - {name: cText, value: maintenance}
+    - {name: accessibleContext.accessibleName, value: maintenance}
+    - {name: size, value: '[width=74,height=15]'}
+    - {name: accessibleName, value: maintenance}
+    - {name: position, value: '[x=171,y=114]'}
+    name: lbl:maintenance
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: actionCommand, value: Switch to maintenance mode}
+    - {method: equals, name: type, value: JCheckBox}
+    generalProperties:
+    - {name: component.class.simpleName, value: JCheckBox}
+    - {name: type, value: JCheckBox}
+    - {name: enabled, value: 'true'}
+    - {name: indexOfType, value: '0'}
+    - {name: instanceOf, value: javax.swing.JCheckBox}
+    - {name: actionCommand, value: Switch to maintenance mode}
+    - {name: component.class.name, value: javax.swing.JCheckBox}
+    - {name: buttonText, value: Switch to maintenance mode}
+    - {name: cText, value: Switch to maintenance mode}
+    - {name: layoutData.y, value: '0.0'}
+    - {name: layoutData.x, value: '1.0'}
+    - {name: accessibleContext.accessibleName, value: Switch to maintenance mode}
+    - {name: size, value: '[width=220,height=64]'}
+    - {name: precedingLabel, value: '3000'}
+    - {name: accessibleName, value: Switch to maintenance mode}
+    - {name: position, value: '[x=255,y=165]'}
+    name: Switch to maintenance mode
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: type, value: JButton}
+    - {method: equals, name: indexOfType, value: '1'}
+    generalProperties:
+    - {name: component.class.simpleName, value: JButton}
+    - {name: type, value: JButton}
+    - {name: indexOfType, value: '1'}
+    - {name: enabled, value: 'true'}
+    - {name: instanceOf, value: javax.swing.JButton}
+    - {name: actionCommand, value: ',,,'}
+    - {name: component.class.name, value: javax.swing.JButton}
+    - {name: buttonText, value: ',,,'}
+    - {name: cText, value: ',,,'}
+    - {name: accessibleContext.accessibleName, value: ',,,'}
+    - {name: size, value: '[width=43,height=25]'}
+    - {name: accessibleName, value: ',,,'}
+    - {name: position, value: '[x=379,y=323]'}
+    name: ',,,'
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: type, value: JButton}
+    - {method: equals, name: indexOfType, value: '2'}
+    generalProperties:
+    - {name: component.class.simpleName, value: JButton}
+    - {name: type, value: JButton}
+    - {name: indexOfType, value: '2'}
+    - {name: enabled, value: 'false'}
+    - {name: instanceOf, value: javax.swing.JButton}
+    - {name: actionCommand, value: ',,,'}
+    - {name: component.class.name, value: javax.swing.JButton}
+    - {name: buttonText, value: ',,,'}
+    - {name: cText, value: ',,,'}
+    - {name: accessibleContext.accessibleName, value: ',,,'}
+    - {name: size, value: '[width=43,height=25]'}
+    - {name: accessibleName, value: ',,,'}
+    - {name: position, value: '[x=387,y=366]'}
+    name: ',,,_2'
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: actionCommand, value: Stop server}
+    - {method: equals, name: type, value: JButton}
+    generalProperties:
+    - {name: component.class.simpleName, value: JButton}
+    - {name: type, value: JButton}
+    - {name: enabled, value: 'true'}
+    - {name: indexOfType, value: '0'}
+    - {name: instanceOf, value: javax.swing.JButton}
+    - {name: actionCommand, value: Stop server}
+    - {name: component.class.name, value: javax.swing.JButton}
+    - {name: buttonText, value: Stop server}
+    - {name: cText, value: Stop server}
+    - {name: layoutData.y, value: '0.0'}
+    - {name: layoutData.x, value: '0.0'}
+    - {name: accessibleContext.accessibleName, value: Stop server}
+    - {name: size, value: '[width=220,height=64]'}
+    - {name: precedingLabel, value: 127.0.0.1}
+    - {name: accessibleName, value: Stop server}
+    - {name: position, value: '[x=255,y=101]'}
+    name: Stop server

@@ -1,0 +1,172 @@
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: type, value: JLabel}
+    - {method: equals, name: indexOfType, value: '1'}
+    generalProperties:
+    - {name: labelText, value: 'lbl:not running'}
+    - {name: component.class.simpleName, value: JLabel}
+    - {name: type, value: JLabel}
+    - {name: indexOfType, value: '1'}
+    - {name: enabled, value: 'true'}
+    - {name: instanceOf, value: javax.swing.JLabel}
+    - {name: component.class.name, value: javax.swing.JLabel}
+    - {name: cText, value: not running}
+    - {name: accessibleContext.accessibleName, value: not running}
+    - {name: size, value: '[width=64,height=15]'}
+    - {name: accessibleName, value: not running}
+    - {name: position, value: '[x=181,y=114]'}
+    name: lbl:not running
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: precedingLabel, value: Server listening on port}
+    - {method: equals, name: type, value: JTextField}
+    generalProperties:
+    - {name: component.class.simpleName, value: JTextField}
+    - {name: type, value: JTextField}
+    - {name: enabled, value: 'true'}
+    - {name: indexOfType, value: '0'}
+    - {name: instanceOf, value: javax.swing.JTextField}
+    - {name: component.class.name, value: javax.swing.JTextField}
+    - {name: cText, value: '3000'}
+    - {name: size, value: '[width=316,height=43]'}
+    - {name: precedingLabel, value: Server listening on port}
+    - {name: position, value: '[x=158,y=272]'}
+    name: Server listening on port
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: precedingLabel, value: /home/guard/GitHub/svv/build/classes/java/main/www}
+    - {method: equals, name: type, value: JButton}
+    generalProperties:
+    - {name: component.class.simpleName, value: JButton}
+    - {name: type, value: JButton}
+    - {name: enabled, value: 'true'}
+    - {name: indexOfType, value: '1'}
+    - {name: instanceOf, value: javax.swing.JButton}
+    - {name: actionCommand, value: ',,,'}
+    - {name: component.class.name, value: javax.swing.JButton}
+    - {name: buttonText, value: ',,,'}
+    - {name: cText, value: ',,,'}
+    - {name: accessibleContext.accessibleName, value: ',,,'}
+    - {name: size, value: '[width=37,height=25]'}
+    - {name: precedingLabel, value: /home/guard/GitHub/svv/build/classes/java/main/www}
+    - {name: accessibleName, value: ',,,'}
+    - {name: position, value: '[x=438,y=360]'}
+    name: ',,,'
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: actionCommand, value: Switch to maintenance mode}
+    - {method: equals, name: type, value: JCheckBox}
+    generalProperties:
+    - {name: component.class.simpleName, value: JCheckBox}
+    - {name: type, value: JCheckBox}
+    - {name: enabled, value: 'false'}
+    - {name: indexOfType, value: '0'}
+    - {name: instanceOf, value: javax.swing.JCheckBox}
+    - {name: actionCommand, value: Switch to maintenance mode}
+    - {name: component.class.name, value: javax.swing.JCheckBox}
+    - {name: buttonText, value: Switch to maintenance mode}
+    - {name: cText, value: Switch to maintenance mode}
+    - {name: layoutData.y, value: '0.0'}
+    - {name: layoutData.x, value: '1.0'}
+    - {name: accessibleContext.accessibleName, value: Switch to maintenance mode}
+    - {name: size, value: '[width=220,height=64]'}
+    - {name: precedingLabel, value: not running}
+    - {name: accessibleName, value: Switch to maintenance mode}
+    - {name: position, value: '[x=255,y=202]'}
+    name: Switch to maintenance mode
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: type, value: JLabel}
+    - {method: equals, name: indexOfType, value: '3'}
+    generalProperties:
+    - {name: labelText, value: 'lbl:not running'}
+    - {name: component.class.simpleName, value: JLabel}
+    - {name: type, value: JLabel}
+    - {name: indexOfType, value: '3'}
+    - {name: enabled, value: 'true'}
+    - {name: instanceOf, value: javax.swing.JLabel}
+    - {name: component.class.name, value: javax.swing.JLabel}
+    - {name: cText, value: not running}
+    - {name: accessibleContext.accessibleName, value: not running}
+    - {name: size, value: '[width=64,height=15]'}
+    - {name: accessibleName, value: not running}
+    - {name: position, value: '[x=181,y=194]'}
+    name: not running
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: type, value: JLabel}
+    - {method: equals, name: indexOfType, value: '5'}
+    generalProperties:
+    - {name: labelText, value: 'lbl:not running'}
+    - {name: component.class.simpleName, value: JLabel}
+    - {name: type, value: JLabel}
+    - {name: indexOfType, value: '5'}
+    - {name: enabled, value: 'true'}
+    - {name: instanceOf, value: javax.swing.JLabel}
+    - {name: component.class.name, value: javax.swing.JLabel}
+    - {name: cText, value: not running}
+    - {name: accessibleContext.accessibleName, value: not running}
+    - {name: size, value: '[width=64,height=15]'}
+    - {name: accessibleName, value: not running}
+    - {name: position, value: '[x=181,y=237]'}
+    name: lbl:not running_2
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: type, value: JButton}
+    - {method: equals, name: indexOfType, value: '1'}
+    generalProperties:
+    - {name: component.class.simpleName, value: JButton}
+    - {name: type, value: JButton}
+    - {name: indexOfType, value: '1'}
+    - {name: enabled, value: 'true'}
+    - {name: instanceOf, value: javax.swing.JButton}
+    - {name: actionCommand, value: ',,,'}
+    - {name: component.class.name, value: javax.swing.JButton}
+    - {name: buttonText, value: ',,,'}
+    - {name: cText, value: ',,,'}
+    - {name: accessibleContext.accessibleName, value: ',,,'}
+    - {name: size, value: '[width=43,height=25]'}
+    - {name: accessibleName, value: ',,,'}
+    - {name: position, value: '[x=379,y=323]'}
+    name: ',,,_2'
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: type, value: JButton}
+    - {method: equals, name: indexOfType, value: '2'}
+    generalProperties:
+    - {name: component.class.simpleName, value: JButton}
+    - {name: type, value: JButton}
+    - {name: indexOfType, value: '2'}
+    - {name: enabled, value: 'true'}
+    - {name: instanceOf, value: javax.swing.JButton}
+    - {name: actionCommand, value: ',,,'}
+    - {name: component.class.name, value: javax.swing.JButton}
+    - {name: buttonText, value: ',,,'}
+    - {name: cText, value: ',,,'}
+    - {name: accessibleContext.accessibleName, value: ',,,'}
+    - {name: size, value: '[width=43,height=25]'}
+    - {name: accessibleName, value: ',,,'}
+    - {name: position, value: '[x=387,y=366]'}
+    name: ',,,_3'
+- !!net.sourceforge.marathon.objectmap.OMapComponent
+    componentRecognitionProperties:
+    - {method: equals, name: actionCommand, value: Start server}
+    - {method: equals, name: type, value: JButton}
+    generalProperties:
+    - {name: component.class.simpleName, value: JButton}
+    - {name: type, value: JButton}
+    - {name: enabled, value: 'true'}
+    - {name: indexOfType, value: '0'}
+    - {name: instanceOf, value: javax.swing.JButton}
+    - {name: actionCommand, value: Start server}
+    - {name: component.class.name, value: javax.swing.JButton}
+    - {name: buttonText, value: Start server}
+    - {name: cText, value: Start server}
+    - {name: layoutData.y, value: '0.0'}
+    - {name: layoutData.x, value: '0.0'}
+    - {name: accessibleContext.accessibleName, value: Start server}
+    - {name: size, value: '[width=220,height=64]'}
+    - {name: precedingLabel, value: not running}
+    - {name: accessibleName, value: Start server}
+    - {name: position, value: '[x=255,y=101]'}
+    name: Start server_2

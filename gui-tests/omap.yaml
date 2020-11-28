@@ -1,0 +1,48 @@
+- !!net.sourceforge.marathon.objectmap.OMapContainer
+    containerGeneralProperties:
+    - {name: component.class.simpleName, value: JFrame}
+    - {name: title, value: 'Svvitch - [STOPPED]'}
+    - {name: enabled, value: 'true'}
+    - {name: instanceOf, value: javax.swing.JFrame}
+    - {name: accessibleContext.accessibleName, value: 'Svvitch - [STOPPED]'}
+    - {name: size, value: '[width=500,height=400]'}
+    - {name: name, value: frame0}
+    - {name: position, value: '[x=0,y=27]'}
+    - {name: component.class.name, value: javax.swing.JFrame}
+    containerRecognitionProperties:
+    - {method: equals, name: component.class.name, value: javax.swing.JFrame}
+    - {method: equals, name: title, value: 'Svvitch - [STOPPED]'}
+    containerTitles: ['Svvitch - [STOPPED]']
+    fileName: Svvitch - [STOPPED]_11956157811905269649.yaml
+- !!net.sourceforge.marathon.objectmap.OMapContainer
+    containerGeneralProperties:
+    - {name: component.class.simpleName, value: JFrame}
+    - {name: title, value: 'Svvitch - [RUNNING]'}
+    - {name: enabled, value: 'true'}
+    - {name: instanceOf, value: javax.swing.JFrame}
+    - {name: accessibleContext.accessibleName, value: 'Svvitch - [RUNNING]'}
+    - {name: size, value: '[width=500,height=400]'}
+    - {name: name, value: frame0}
+    - {name: position, value: '[x=0,y=27]'}
+    - {name: component.class.name, value: javax.swing.JFrame}
+    containerRecognitionProperties:
+    - {method: equals, name: component.class.name, value: javax.swing.JFrame}
+    - {method: equals, name: title, value: 'Svvitch - [RUNNING]'}
+    containerTitles: ['Svvitch - [RUNNING]']
+    fileName: Svvitch - [RUNNING]_17007875600387990318.yaml
+- !!net.sourceforge.marathon.objectmap.OMapContainer
+    containerGeneralProperties:
+    - {name: component.class.simpleName, value: JFrame}
+    - {name: title, value: 'Svvitch - [MAINTENANCE]'}
+    - {name: enabled, value: 'true'}
+    - {name: instanceOf, value: javax.swing.JFrame}
+    - {name: accessibleContext.accessibleName, value: 'Svvitch - [MAINTENANCE]'}
+    - {name: size, value: '[width=500,height=400]'}
+    - {name: name, value: frame0}
+    - {name: position, value: '[x=0,y=27]'}
+    - {name: component.class.name, value: javax.swing.JFrame}
+    containerRecognitionProperties:
+    - {method: equals, name: component.class.name, value: javax.swing.JFrame}
+    - {method: equals, name: title, value: 'Svvitch - [MAINTENANCE]'}
+    containerTitles: ['Svvitch - [MAINTENANCE]']
+    fileName: Svvitch - [MAINTENANCE]_2921892113000591289.yaml

@@ -85,6 +85,7 @@ public final class InterfaceBuilder {
 
 		JLabel selectedLabel = new JLabel("selected");
 		selectedLabel.setBorder(BorderFactory.createEtchedBorder());
+		selectedLabel.setPreferredSize(new Dimension(200, 10));
 		ComponentMap.put(ComponentMap.Identifier.MAINTENANCE_DIR, selectedLabel);
 		panel.add(selectedLabel);
 
@@ -113,6 +114,7 @@ public final class InterfaceBuilder {
 
 		JLabel selectedLabel = new JLabel("selected");
 		selectedLabel.setBorder(BorderFactory.createEtchedBorder());
+		selectedLabel.setPreferredSize(new Dimension(200, 10));
 		ComponentMap.put(ComponentMap.Identifier.WEBROOT_DIR, selectedLabel);
 		panel.add(selectedLabel);
 
