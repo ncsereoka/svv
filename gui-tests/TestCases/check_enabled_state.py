@@ -12,7 +12,7 @@ def test():
         assert_p(',,,_2', 'Enabled', 'true')
         assert_p(',,,_3', 'Enabled', 'true')
         assert_p('Switch to maintenance mode', 'Enabled', 'false')
-        click('Start server')
+        click('Start server_2')
     close()
 
     if window('Svvitch - [RUNNING]'):

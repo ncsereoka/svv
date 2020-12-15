@@ -31,6 +31,6 @@ In this project, I've used Gradle. Why? I have already used Maven, time to try o
 - Marathon GUI tests
   - Start your local copy of Marathon.
   - Open the project folder *gui-tests*.
-  - Run the tests.
+  - Once the GUI is open, you can select one TestCase file and then press Run to start the test.
 
 - Selenium Web tests

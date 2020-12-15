@@ -5,7 +5,7 @@ from default import *
 def test():
     set_java_recorded_version("11.0.8")
     if window('Svvitch - [STOPPED]'):
-        click('Start server')
+        click('Start server_2')
     close()
 
     if window('Svvitch - [RUNNING]'):
