@@ -87,6 +87,8 @@ Useful to 'mock out' annoying/irrelevant behavior from control flow
 
 ## Selenium Web tests
 
+- Going through the test pages to make sure that urls/links work
+
 ## Live Demo
 
 - `gradle build` to show whole process
